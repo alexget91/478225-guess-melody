@@ -1,6 +1,6 @@
 import getElementFromTemplate from '../get-element-from-template.js';
 import showScreen from '../show-screen.js';
-import artistScreen from './artist.js';
+import artistScreen, {artistScreenInit} from './artist.js';
 
 const welcomeScreen = getElementFromTemplate(`\
 <section class="main main--welcome">
@@ -15,8 +15,15 @@ const welcomeScreen = getElementFromTemplate(`\
 </section>\
 `);
 
-welcomeScreen.querySelector(`.main-play`).addEventListener(`click`, function () {
-  showScreen(artistScreen);
-});
+const play = welcomeScreen.querySelector(`.main-play`);
 
+const onPlayClick = () => {
+  play.removeEventListener(`click`, onPlayClick);
+  showScreen(artistScreen, artistScreenInit);
+};
+
+const welcomeScreenInit = () => play.addEventListener(`click`, onPlayClick);
+
+
+export {welcomeScreenInit};
 export default welcomeScreen;

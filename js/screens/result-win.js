@@ -1,6 +1,6 @@
 import getElementFromTemplate from '../get-element-from-template.js';
 import showScreen from '../show-screen.js';
-import welcomeScreen from './welcome.js';
+import welcomeScreen, {welcomeScreenInit} from './welcome.js';
 
 const winScreen = getElementFromTemplate(`\
 <section class="main main--result">
@@ -15,8 +15,15 @@ const winScreen = getElementFromTemplate(`\
 </section>\
 `);
 
-winScreen.querySelector(`.main-replay`).addEventListener(`click`, function () {
-  showScreen(welcomeScreen);
-});
+const replay = winScreen.querySelector(`.main-replay`);
 
+const onReplayClick = () => {
+  replay.removeEventListener(`click`, onReplayClick);
+  showScreen(welcomeScreen, welcomeScreenInit);
+};
+
+const winScreenInit = () => replay.addEventListener(`click`, onReplayClick);
+
+
+export {winScreenInit};
 export default winScreen;

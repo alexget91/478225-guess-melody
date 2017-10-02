@@ -1,6 +1,6 @@
 import getElementFromTemplate from '../get-element-from-template.js';
 import showScreen from '../show-screen.js';
-import welcomeScreen from './welcome.js';
+import welcomeScreen, {welcomeScreenInit} from './welcome.js';
 
 const loseAttemptsScreen = getElementFromTemplate(`\
 <section class="main main--result">
@@ -12,8 +12,15 @@ const loseAttemptsScreen = getElementFromTemplate(`\
 </section>\
 `);
 
-loseAttemptsScreen.querySelector(`.main-replay`).addEventListener(`click`, function () {
-  showScreen(welcomeScreen);
-});
+const replay = loseAttemptsScreen.querySelector(`.main-replay`);
 
+const onReplayClick = () => {
+  replay.removeEventListener(`click`, onReplayClick);
+  showScreen(welcomeScreen, welcomeScreenInit);
+};
+
+const loseAttemptsScreenInit = () => replay.addEventListener(`click`, onReplayClick);
+
+
+export {loseAttemptsScreenInit};
 export default loseAttemptsScreen;

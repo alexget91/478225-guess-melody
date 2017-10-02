@@ -1,6 +1,6 @@
 import getElementFromTemplate from '../get-element-from-template.js';
 import showScreen from '../show-screen.js';
-import genreScreen from './genre.js';
+import genreScreen, {genreScreenInit} from './genre.js';
 
 const artistScreen = getElementFromTemplate(`\
 <section class="main main--level main--level-artist">
@@ -64,10 +64,15 @@ const artistScreen = getElementFromTemplate(`\
 </section>\
 `);
 
-[].forEach.call(artistScreen.querySelectorAll(`.main-answer`), function (el) {
-  el.addEventListener(`click`, function () {
-    showScreen(genreScreen);
-  });
-});
+const answers = artistScreen.querySelectorAll(`.main-answer`);
 
+const onAnswerClick = () => {
+  [].forEach.call(answers, (el) => el.removeEventListener(`click`, onAnswerClick));
+  showScreen(genreScreen, genreScreenInit);
+};
+
+const artistScreenInit = () => [].forEach.call(answers, (el) => el.addEventListener(`click`, onAnswerClick));
+
+
+export {artistScreenInit};
 export default artistScreen;

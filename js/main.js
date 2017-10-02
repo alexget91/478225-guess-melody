@@ -1,4 +1,4 @@
-import welcomeScreen from './screens/welcome.js';
 import showScreen from './show-screen.js';
+import welcomeScreen, {welcomeScreenInit} from './screens/welcome.js';
 
-showScreen(welcomeScreen);
+showScreen(welcomeScreen, welcomeScreenInit);

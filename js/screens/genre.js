@@ -1,8 +1,8 @@
 import getElementFromTemplate from '../get-element-from-template.js';
 import showScreen from '../show-screen.js';
-import winScreen from './result-win.js';
-import loseTimeScreen from './result-lose-time.js';
-import loseAttemptsScreen from './result-lose-attempts.js';
+import winScreen, {winScreenInit} from './result-win.js';
+import loseTimeScreen, {loseTimeScreenInit} from './result-lose-time.js';
+import loseAttemptsScreen, {loseAttemptsScreenInit} from './result-lose-attempts.js';
 
 const genreScreen = getElementFromTemplate(`\
 <section class="main main--level main--level-genre">
@@ -90,41 +90,51 @@ const genreScreen = getElementFromTemplate(`\
 `);
 
 const submitBtn = genreScreen.querySelector(`.genre-answer-send`);
+const answers = genreScreen.querySelectorAll(`.genre-answer input[name="answer"]`);
 let checkedCount = 0;
 
-const resetScreen = function () {
+const resetScreen = () => {
   genreScreen.querySelector(`.genre`).reset();
-  submitBtn.setAttribute(`disabled`, ``);
+  submitDisable();
   checkedCount = 0;
+  [].forEach.call(answers, (el) => el.removeEventListener(`change`, onAnswerChange));
+  submitBtn.removeEventListener(`click`, onSubmitClick);
 };
 
-submitBtn.setAttribute(`disabled`, ``);
+const submitDisable = () => submitBtn.setAttribute(`disabled`, ``);
+const submitEnable = () => submitBtn.removeAttribute(`disabled`);
 
-[].forEach.call(genreScreen.querySelectorAll(`.genre-answer input[name="answer"]`), function (el) {
-  el.addEventListener(`change`, function (evt) {
-    checkedCount = evt.target.checked ? checkedCount + 1 : checkedCount - 1;
-    if (!checkedCount) {
-      submitBtn.setAttribute(`disabled`, ``);
-    } else {
-      submitBtn.removeAttribute(`disabled`);
-    }
-  });
-});
-
-submitBtn.addEventListener(`click`, function (evt) {
+const onSubmitClick = (evt) => {
   evt.preventDefault();
   resetScreen();
   switch (Math.floor(Math.random() * 3)) {
     case 0:
-      showScreen(winScreen);
+      showScreen(winScreen, winScreenInit);
       break;
     case 1:
-      showScreen(loseTimeScreen);
+      showScreen(loseTimeScreen, loseTimeScreenInit);
       break;
     case 2:
-      showScreen(loseAttemptsScreen);
+      showScreen(loseAttemptsScreen, loseAttemptsScreenInit);
       break;
   }
-});
+};
 
+const onAnswerChange = (evt) => {
+  checkedCount = evt.target.checked ? checkedCount + 1 : checkedCount - 1;
+  if (!checkedCount) {
+    submitDisable();
+  } else {
+    submitEnable();
+  }
+};
+
+const genreScreenInit = () => {
+  submitDisable();
+  [].forEach.call(answers, (el) => el.addEventListener(`change`, onAnswerChange));
+  submitBtn.addEventListener(`click`, onSubmitClick);
+};
+
+
+export {genreScreenInit};
 export default genreScreen;
