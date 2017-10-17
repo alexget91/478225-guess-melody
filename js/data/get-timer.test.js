@@ -10,8 +10,7 @@ describe(`Get timer`, () => {
     assert.equal(6, getTimer(7).tick().value);
   });
 
-  it(`should return 'false' when timer is stop`, () => {
-    assert.strictEqual(false, getTimer(0));
-    assert.strictEqual(false, getTimer(-2));
+  it(`should return 'false' when 'tick' method called on stopped timer`, () => {
+    assert.strictEqual(false, getTimer(0).tick());
   });
 });

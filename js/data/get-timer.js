@@ -1,10 +1,10 @@
 const getTimer = (time) => {
-  return time > 0 ? {
+  return {
     value: time,
     tick() {
-      return getTimer(this.value - 1);
+      return time > 0 ? getTimer(this.value - 1) : false;
     }
-  } : false;
+  };
 };
 
 export default getTimer;
