@@ -3,8 +3,8 @@ import {QUESTIONS_COUNT, FAST_ANSWER_TIME, answerPrice, GAME_OVER_CODE} from './
 const getScore = (answers, notesLeft) => {
   if (answers.length === QUESTIONS_COUNT && notesLeft > 0) {
     return answers.reduce((score, el) => {
-      if (el[0]) {
-        score += el[1] < FAST_ANSWER_TIME ? answerPrice.FAST : answerPrice.CORRECT;
+      if (el.isCorrect) {
+        score += el.time < FAST_ANSWER_TIME ? answerPrice.FAST : answerPrice.CORRECT;
       } else {
         score += answerPrice.WRONG;
       }
