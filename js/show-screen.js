@@ -1,7 +1,22 @@
-const app = document.querySelector(`.app`);
+import getElementFromTemplate from './get-element-from-template.js';
 
-export default (screen, initialize) => {
-  app.replaceChild(screen, app.querySelector(`.main`));
+const main = document.querySelector(`.main`);
+
+export default (template, initialize) => {
+  const screen = getElementFromTemplate(template);
+  const classes = screen.classList;
+
+  if (classes.contains(`main`)) {
+    const screenContent = screen.children;
+
+    main.classList = classes;
+    while (screenContent.length > 0) {
+      main.appendChild(screenContent[0]);
+    }
+  } else {
+    main.appendChild(screen);
+  }
+
   if (typeof initialize !== `undefined`) {
     initialize();
   }

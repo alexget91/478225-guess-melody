@@ -1,8 +1,9 @@
-import getElementFromTemplate from '../get-element-from-template.js';
 import showScreen from '../show-screen.js';
+import clearScreen from '../clear-screen.js';
+import header from './header.js';
 import artistScreen, {artistScreenInit} from './artist.js';
 
-const welcomeScreen = getElementFromTemplate(`\
+const welcomeScreenTemplate = `\
 <section class="main main--welcome">
   <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
   <button class="main-play">Начать игру</button>
@@ -12,18 +13,21 @@ const welcomeScreen = getElementFromTemplate(`\
     Ошибиться можно 3 раза.<br>
     Удачи!
   </p>
-</section>\
-`);
+</section>`;
 
-const play = welcomeScreen.querySelector(`.main-play`);
+const welcomeScreenInit = () => {
+  const play = document.querySelector(`.main-play`);
 
-const onPlayClick = () => {
-  play.removeEventListener(`click`, onPlayClick);
-  showScreen(artistScreen, artistScreenInit);
+  const onPlayClick = () => {
+    play.removeEventListener(`click`, onPlayClick);
+    clearScreen();
+    showScreen(header);
+    showScreen(artistScreen, artistScreenInit);
+  };
+
+  play.addEventListener(`click`, onPlayClick);
 };
-
-const welcomeScreenInit = () => play.addEventListener(`click`, onPlayClick);
 
 
 export {welcomeScreenInit};
-export default welcomeScreen;
+export default welcomeScreenTemplate;

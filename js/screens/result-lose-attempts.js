@@ -1,26 +1,28 @@
-import getElementFromTemplate from '../get-element-from-template.js';
 import showScreen from '../show-screen.js';
+import clearScreen from '../clear-screen.js';
 import welcomeScreen, {welcomeScreenInit} from './welcome.js';
 
-const loseAttemptsScreen = getElementFromTemplate(`\
+const loseAttemptsScreenTemplate = `\
 <section class="main main--result">
   <section class="logo" title="Угадай мелодию"><h1>Угадай мелодию</h1></section>
 
   <h2 class="title">Какая жалость!</h2>
   <div class="main-stat">У вас закончились все попытки.<br>Ничего, повезёт в следующий раз!</div>
   <span role="button" tabindex="0" class="main-replay">Попробовать ещё раз</span>
-</section>\
-`);
+</section>`;
 
-const replay = loseAttemptsScreen.querySelector(`.main-replay`);
+const loseAttemptsScreenInit = () => {
+  const replay = document.querySelector(`.main-replay`);
 
-const onReplayClick = () => {
-  replay.removeEventListener(`click`, onReplayClick);
-  showScreen(welcomeScreen, welcomeScreenInit);
+  const onReplayClick = () => {
+    replay.removeEventListener(`click`, onReplayClick);
+    clearScreen();
+    showScreen(welcomeScreen, welcomeScreenInit);
+  };
+
+  replay.addEventListener(`click`, onReplayClick);
 };
-
-const loseAttemptsScreenInit = () => replay.addEventListener(`click`, onReplayClick);
 
 
 export {loseAttemptsScreenInit};
-export default loseAttemptsScreen;
+export default loseAttemptsScreenTemplate;
