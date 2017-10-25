@@ -1,5 +1,7 @@
 export const QUESTIONS_COUNT = 10;
+export const GAME_TIME = 300;
 export const FAST_ANSWER_TIME = 30;
+export const LIVES_COUNT = 4;
 export const answerPrice = {
   CORRECT: 1,
   FAST: 2,
