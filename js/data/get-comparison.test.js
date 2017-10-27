@@ -1,7 +1,6 @@
 import assert from 'assert';
-import showScore from './show-score.js';
-import {messages} from './constants.js';
-import showWinMessage from './show-win-message.js';
+import getComparison from './get-comparison.js';
+import gameData from './game-data.js';
 
 let statistics;
 let result;
@@ -34,35 +33,35 @@ describe(`Show player score`, () => {
 
   it(`should return correct message when time is over`, () => {
     result.timeLeft = 0;
-    assert.equal(messages.TIME_OVER, showScore(statistics, result));
+    assert.equal(gameData.ExitCode.TIME_OVER, getComparison(statistics, result));
   });
 
   it(`should return correct message when lives is over`, () => {
     result.notesLeft = 0;
-    assert.equal(messages.NOTES_OVER, showScore(statistics, result));
+    assert.equal(gameData.ExitCode.NOTES_OVER, getComparison(statistics, result));
   });
 
   it(`should return correct message when player wins (2nd place out of 4)`, () => {
-    assert.equal(showWinMessage(2, 4, 50), showScore(statistics, result));
+    assert.deepEqual({place: 2, playersCount: 4, percent: 50}, getComparison(statistics, result));
   });
 
   it(`should return correct message when player wins (2nd place out of 3)`, () => {
     statistics.splice(2, 1);
-    assert.equal(showWinMessage(2, 3, 33), showScore(statistics, result));
+    assert.deepEqual({place: 2, playersCount: 3, percent: 33}, getComparison(statistics, result));
   });
 
   it(`should return correct message when player wins (1st position in statistics)`, () => {
     result.score = 20;
-    assert.equal(showWinMessage(1, 4, 75), showScore(statistics, result));
+    assert.deepEqual({place: 1, playersCount: 4, percent: 75}, getComparison(statistics, result));
   });
 
   it(`should return correct message when player wins (last position in statistics)`, () => {
     result.score = 1;
-    assert.equal(showWinMessage(4, 4, 0), showScore(statistics, result));
+    assert.deepEqual({place: 4, playersCount: 4, percent: 0}, getComparison(statistics, result));
   });
 
   it(`should return correct message when player wins (statistics is empty)`, () => {
     statistics = [];
-    assert.equal(showWinMessage(1, 1, 0), showScore(statistics, result));
+    assert.deepEqual({place: 1, playersCount: 1, percent: 0}, getComparison(statistics, result));
   });
 });

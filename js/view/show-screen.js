@@ -2,7 +2,7 @@ import getElementFromTemplate from './get-element-from-template.js';
 
 const main = document.querySelector(`.main`);
 
-export default (template, initialize) => {
+export default (template, initialize, state) => {
   const screen = getElementFromTemplate(template);
   const classes = screen.classList;
 
@@ -18,6 +18,6 @@ export default (template, initialize) => {
   }
 
   if (typeof initialize !== `undefined`) {
-    initialize();
+    initialize(state);
   }
 };
