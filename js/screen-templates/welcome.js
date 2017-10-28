@@ -1,27 +1,13 @@
-import showNextQuestion from '../control/show-next-question.js';
-import logo from './logo.js';
+// import showNextQuestion from '../control/show-next-question.js';
+import WelcomeView from './welcome-view.js';
+import dataWelcome from '../screen-data/data-welcome.js';
 
-const welcomeScreenTemplate = (data) => `\
-<section class="main main--welcome">
-  ${logo}
-  <button class="main-play">${data.startText}</button>
-  <h2 class="title main-title">${data.content.title}</h2>
-  <p class="text main-text">
-    ${data.content.text}
-  </p>
-</section>`;
+const welcome = new WelcomeView(dataWelcome);
 
-const welcomeScreenInit = () => {
-  const play = document.querySelector(`.main-play`);
-
-  const onPlayClick = () => {
-    play.removeEventListener(`click`, onPlayClick);
-    showNextQuestion(false, true);
-  };
-
-  play.addEventListener(`click`, onPlayClick);
+welcome.onPlayClick = () => {
+  console.log(654);
+  welcome.unbind();
+  // showNextQuestion(false, true);
 };
 
-
-export {welcomeScreenInit};
-export default welcomeScreenTemplate;
+export default welcome;

@@ -1,9 +1,10 @@
-import getElementFromTemplate from './get-element-from-template.js';
+// import getElementFromTemplate from './get-element-from-template.js';
 
 const main = document.querySelector(`.main`);
 
 export default (template, initialize, state) => {
-  const screen = getElementFromTemplate(template);
+  // const screen = getElementFromTemplate(template);
+  const screen = template;
   const classes = screen.classList;
 
   if (classes.contains(`main`)) {
