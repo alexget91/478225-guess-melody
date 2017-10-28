@@ -1,6 +1,6 @@
 import {gameSequence as gameSequenceInitial, gameAnswers, initialState} from '../data/game-data.js';
-import showScreen from '../view/show-screen.js';
-import clearScreen from '../view/clear-screen.js';
+import showScreen from '../dom-helpers/show-screen.js';
+import clearScreen from '../dom-helpers/clear-screen.js';
 import header from '../screen-templates/header.js';
 import artistScreenTemplate, {artistScreenInit} from '../screen-templates/artist.js';
 import genreScreenTemplate, {genreScreenInit} from '../screen-templates/genre.js';

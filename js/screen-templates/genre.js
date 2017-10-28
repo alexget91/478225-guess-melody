@@ -52,8 +52,13 @@ const genreScreenInit = (gameState) => {
     };
   });
 
-  const submitDisable = () => submitBtn.setAttribute(`disabled`, ``);
-  const submitEnable = () => submitBtn.removeAttribute(`disabled`);
+  const submitToggle = (disable) => {
+    if (disable) {
+      submitBtn.setAttribute(`disabled`, ``);
+    } else {
+      submitBtn.removeAttribute(`disabled`);
+    }
+  };
 
   const audioPlay = () => {
     if (playingID) {
@@ -103,14 +108,10 @@ const genreScreenInit = (gameState) => {
     isRight = Object.keys(userAnswer).length === parseInt(genreScreen.querySelector(`.genre`).dataset.rightLength, 10)
               && Object.values(userAnswer).reduce((result, it) => (result && Boolean(it)), true);
 
-    if (!Object.keys(userAnswer).length) {
-      submitDisable();
-    } else {
-      submitEnable();
-    }
+    submitToggle(!Object.keys(userAnswer).length);
   };
 
-  submitDisable();
+  submitToggle(true);
   [].forEach.call(answers, (el) => el.addEventListener(`change`, onAnswerChange));
   [].forEach.call(Object.values(players), (el) => el.control.addEventListener(`click`, onPlayerClick));
   submitBtn.addEventListener(`click`, onSubmitClick);
