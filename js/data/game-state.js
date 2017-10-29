@@ -15,8 +15,4 @@ export default class GameState {
     this.notesLeft = gameData.NOTES_COUNT;
     this.timeLeft = gameData.GAME_TIME;
   }
-
-  static getDefaultGameState() {
-    return new GameState(gameData.NOTES_COUNT, gameData.GAME_TIME);
-  }
 }

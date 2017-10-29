@@ -1,9 +1,9 @@
-import GameState from '../data/game-state.js';
+import GameState from './game-state.js';
 
 const gameData = {
   GAME_TITLE: `Угадай мелодию`,
   GAME_TIME: 300,
-  QUESTIONS_COUNT: 4,
+  QUESTIONS_COUNT: 10,
   FAST_ANSWER_TIME: 30,
   TIMER_BLINK_TIME: 30,
   NOTES_COUNT: 4,
@@ -19,7 +19,7 @@ const gameData = {
 };
 
 // Параметры хедера
-export const gameState = GameState.getDefaultGameState();
+export const gameState = new GameState(gameData.NOTES_COUNT, gameData.GAME_TIME);
 
 // Массив вопросов игры
 export const gameSequence = [
