@@ -1,17 +1,22 @@
-import {QUESTIONS_COUNT, FAST_ANSWER_TIME, answerPrice, GAME_OVER_CODE} from './constants.js';
+import gameData from './game-data.js';
 
-const getScore = (answers, notesLeft) => {
-  if (answers.length === QUESTIONS_COUNT && notesLeft > 0) {
-    return answers.reduce((score, el) => {
-      if (el.isCorrect) {
-        score += el.time < FAST_ANSWER_TIME ? answerPrice.FAST : answerPrice.CORRECT;
+// Подсчитывает количество очков и количество быстрых ответов пользователя
+export default (answers) => {
+  let score = 0;
+  let fastCount = 0;
+
+  answers.forEach((el) => {
+    if (el.isRight) {
+      if (el.time < gameData.FAST_ANSWER_TIME) {
+        score += gameData.AnswerPrice.FAST;
+        fastCount++;
       } else {
-        score += answerPrice.WRONG;
+        score += gameData.AnswerPrice.CORRECT;
       }
-      return score;
-    }, 0);
-  }
-  return GAME_OVER_CODE;
-};
+    } else {
+      score += gameData.AnswerPrice.WRONG;
+    }
+  });
 
-export default getScore;
+  return {score, fastCount};
+};
