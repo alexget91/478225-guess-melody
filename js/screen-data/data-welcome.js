@@ -10,7 +10,6 @@ if (gameTime.sec) {
 }
 
 export default {
-  title: `Угадай мелодию`,
   startText: `Начать игру`,
   content: {
     title: `Правила игры`,
