@@ -12,19 +12,19 @@ export default class GenreView extends AbstractView {
       const right = el.right ? `true` : ``;
 
       answers += `\
-      <div class="genre-answer">
-        <div class="player-wrapper">
-          <div class="player">
-            <audio data-id="${el.id}" src="${el.src}"></audio>
-            <button class="player-control"></button>
-            <div class="player-track">
-              <span class="player-status"></span>
+        <div class="genre-answer">
+          <div class="player-wrapper">
+            <div class="player">
+              <audio data-id="${el.id}" src="${el.src}"></audio>
+              <button class="player-control"></button>
+              <div class="player-track">
+                <span class="player-status"></span>
+              </div>
             </div>
           </div>
-        </div>
-        <input type="checkbox" name="answer" value="answer-${el.id}" id="a-${el.id}" data-right="${right}">
-        <label class="genre-answer-check" for="a-${el.id}"></label>
-      </div>`;
+          <input type="checkbox" name="answer" value="answer-${el.id}" id="a-${el.id}" data-right="${right}">
+          <label class="genre-answer-check" for="a-${el.id}"></label>
+        </div>`;
     });
 
     return `\
@@ -45,6 +45,7 @@ export default class GenreView extends AbstractView {
     this.answers = this.element.querySelectorAll(`.genre-answer input[name="answer"]`);
     this.playingID = null;
     this.players = {};
+    this.userAnswer = {};
 
     [].forEach.call(this.element.querySelectorAll(`.player`), (el) => {
       const audio = el.querySelector(`audio`);

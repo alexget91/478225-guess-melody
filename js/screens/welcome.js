@@ -5,7 +5,6 @@ import dataWelcome from '../screen-data/data-welcome.js';
 const welcome = new WelcomeView(dataWelcome);
 
 welcome.onPlayClick = () => {
-  welcome.unbind();
   showNextQuestion(true);
 };
 

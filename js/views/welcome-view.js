@@ -7,14 +7,15 @@ export default class WelcomeView extends AbstractView {
   }
 
   get template() {
-    return `<section class="main main--welcome">
-      ${logo}
-      <button class="main-play">${this.data.startText}</button>
-      <h2 class="title main-title">${this.data.content.title}</h2>
-      <p class="text main-text">
-        ${this.data.content.text}
-      </p>
-    </section>`;
+    return `\
+      <section class="main main--welcome">
+        ${logo}
+        <button class="main-play">${this.data.startText}</button>
+        <h2 class="title main-title">${this.data.content.title}</h2>
+        <p class="text main-text">
+          ${this.data.content.text}
+        </p>
+      </section>`;
   }
 
   bind() {

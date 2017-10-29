@@ -20,7 +20,7 @@ export default () => {
     dataResult = getDataWin(gameResult, comparison);
   }
 
-  clearScreen();
   result.data = dataResult;
+  clearScreen();
   showScreen(result.element);
 };

@@ -22,23 +22,24 @@ export default class ArtistView extends AbstractView {
         </div>`;
     });
 
-    return `<section class="main main--level main--level-artist">
-      <div class="main-wrap">
-        <h2 class="title main-title">${this.data.title}</h2>
-        <div class="player-wrapper">
-          <div class="player">
-            <audio src="${this.data.melody.src}"></audio>
-            <button class="player-control player-control--pause"></button>
-            <div class="player-track">
-              <span class="player-status"></span>
+    return `\
+      <section class="main main--level main--level-artist">
+        <div class="main-wrap">
+          <h2 class="title main-title">${this.data.title}</h2>
+          <div class="player-wrapper">
+            <div class="player">
+              <audio src="${this.data.melody.src}"></audio>
+              <button class="player-control player-control--pause"></button>
+              <div class="player-track">
+                <span class="player-status"></span>
+              </div>
             </div>
           </div>
+          <form class="main-list">
+            ${answers}
+          </form>
         </div>
-        <form class="main-list">
-          ${answers}
-        </form>
-      </div>
-    </section>`;
+      </section>`;
   }
 
   bind() {
