@@ -1,9 +1,9 @@
-import {gameAnswers} from '../data/game-data.js';
+import {gameAnswers, gameState} from '../data/game-data.js';
 import showNextQuestion from './show-next-question.js';
 import showGameEnd from './show-game-end.js';
 import showMistake from '../view/show-mistake.js';
 
-export default (gameState, isRight, time) => {
+export default (isRight, time) => {
   gameAnswers.push({isRight, time});
 
   if (!isRight) {
@@ -12,14 +12,14 @@ export default (gameState, isRight, time) => {
 
   if (!gameState.notesLeft) {
 
-    showGameEnd(gameState);
+    showGameEnd();
 
   } else {
 
     if (!isRight) {
-      showMistake(gameState);
+      showMistake();
     }
 
-    showNextQuestion(gameState);
+    showNextQuestion();
   }
 };

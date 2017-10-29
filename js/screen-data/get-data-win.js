@@ -1,4 +1,4 @@
-import {gameAnswers, initialState} from '../data/game-data.js';
+import gameData, {gameAnswers} from '../data/game-data.js';
 import getNumEnding from '../data/get-num-ending.js';
 import getScore from '../data/get-score.js';
 import getMinutes from '../data/get-minutes.js';
@@ -6,7 +6,7 @@ import getMinutes from '../data/get-minutes.js';
 export default (gameResult, comparison) => {
   const gameScore = getScore(gameAnswers);
   const gameTimeLeft = getMinutes(gameResult.timeLeft);
-  const mistakes = initialState.notesLeft - gameResult.notesLeft;
+  const mistakes = gameData.NOTES_COUNT - gameResult.notesLeft;
 
   return {
     title: `Вы настоящий меломан!`,

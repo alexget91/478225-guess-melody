@@ -1,6 +1,19 @@
 import getElementFromTemplate from '../view/get-element-from-template';
 
 export default class AbstractView {
+  constructor(data) {
+    this.data = data;
+  }
+
+  get data() {
+    return this._data;
+  }
+
+  set data(data) {
+    this._data = data;
+    delete this._element;
+  }
+
   get template() {
     // возвращает строку, содержащую разметку
   }
