@@ -34,6 +34,7 @@ export default (reset) => {
       artist.data = getDataArtist(question);
       showScreen(artist.element);
     } else {
+      gameState.currentLevelIsGenre = true;
       genre.data = getDataGenre(question);
       showScreen(genre.element);
     }

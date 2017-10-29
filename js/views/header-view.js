@@ -1,4 +1,7 @@
 import AbstractView from './abstract-view.js';
+import getMistakesHTML from '../screen-data/get-mistakes-html.js';
+import getTimer from '../data/get-timer.js';
+import {gameState} from '../data/game-data.js';
 
 export default class HeaderView extends AbstractView {
   constructor(data) {
@@ -6,12 +9,6 @@ export default class HeaderView extends AbstractView {
   }
 
   get template() {
-    let mistakes = ``;
-
-    for (let i = 0; i < this.data.mistakes; i++) {
-      mistakes += `<img class="main-mistake" src="img/wrong-answer.png" width="35" height="49">`;
-    }
-
     return `\
     <div class="page-header">
       <svg xmlns="http://www.w3.org/2000/svg" class="timer" viewBox="0 0 780 780">
@@ -27,8 +24,24 @@ export default class HeaderView extends AbstractView {
         </div>
       </svg>
       <div class="main-mistakes">
-        ${mistakes}
+        ${getMistakesHTML()}
       </div>
     </div>`;
+  }
+
+  bind() {
+    this.headerMin = this.element.querySelector(`.timer-value-mins`);
+    this.headerSec = this.element.querySelector(`.timer-value-secs`);
+
+    this.timer = getTimer(gameState.timeLeft);
+    this.timerInterval = setInterval(this.onTimerTick, 1000);
+  }
+
+  unbind() {
+    clearInterval(this.timerInterval);
+  }
+
+  onTimerTick() {
+
   }
 }

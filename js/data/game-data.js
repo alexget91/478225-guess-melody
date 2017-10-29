@@ -5,6 +5,7 @@ const gameData = {
   GAME_TIME: 300,
   QUESTIONS_COUNT: 4,
   FAST_ANSWER_TIME: 30,
+  TIMER_BLINK_TIME: 30,
   NOTES_COUNT: 4,
   AnswerPrice: {
     CORRECT: 1,
@@ -44,17 +45,6 @@ export const gameSequence = [
     correctAnswer: new Set([2, 4]),
     answers: new Set([1, 2, 3, 4])
   },
-  /* {
-    typeArtist: true,
-    melodyID: 1,
-    answers: new Set([1, 2, 3])
-  },
-  {
-    typeArtist: false,
-    genre: `Rock`,
-    correctAnswer: new Set([2, 4]),
-    answers: new Set([1, 2, 3, 4])
-  },
   {
     typeArtist: true,
     melodyID: 1,
@@ -76,7 +66,18 @@ export const gameSequence = [
     genre: `Rock`,
     correctAnswer: new Set([2, 4]),
     answers: new Set([1, 2, 3, 4])
-  } */
+  },
+  {
+    typeArtist: true,
+    melodyID: 1,
+    answers: new Set([1, 2, 3])
+  },
+  {
+    typeArtist: false,
+    genre: `Rock`,
+    correctAnswer: new Set([2, 4]),
+    answers: new Set([1, 2, 3, 4])
+  }
 ];
 
 // Статистика предыдущих игр
