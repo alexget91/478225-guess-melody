@@ -5,6 +5,7 @@ import gameData, {gameState} from '../data/game-data.js';
 import showGameEnd from '../control/show-game-end.js';
 import artist from './artist.js';
 import genre from './genre.js';
+import getRadius from '../data/get-radius';
 
 const header = new HeaderView();
 
@@ -28,11 +29,14 @@ header.onTimerTick = () => {
     }
 
     const time = getMinutes(header.timer.value);
+    const timeRatio = header.timer.value / gameData.GAME_TIME;
+    const timerLineParameters = getRadius(timeRatio, 370);
 
     gameState.timeLeft = header.timer.value;
 
     header.headerMin.textContent = getFormattedTime(time.min);
     header.headerSec.textContent = getFormattedTime(time.sec);
+    header.timerLine.setAttribute(`stroke-dashoffset`, timerLineParameters.offset);
   }
 };
 
