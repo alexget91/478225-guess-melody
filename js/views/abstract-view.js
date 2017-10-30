@@ -16,6 +16,7 @@ export default class AbstractView {
 
   get template() {
     // возвращает строку, содержащую разметку
+    throw new Error(`Not implemented`);
   }
 
   get element() {
@@ -33,9 +34,11 @@ export default class AbstractView {
 
   bind() {
     // добавляет обработчики событий
+    throw new Error(`Not implemented`);
   }
 
   unbind() {
     // удаляет обработчики событий
+    throw new Error(`Not implemented`);
   }
 }

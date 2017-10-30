@@ -60,10 +60,10 @@ export default class ArtistView extends AbstractView {
   }
 
   onAnswerClick() {
-
+    throw new Error(`Not implemented`);
   }
 
   onPlayerClick() {
-
+    throw new Error(`Not implemented`);
   }
 }

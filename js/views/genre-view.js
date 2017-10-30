@@ -91,14 +91,14 @@ export default class GenreView extends AbstractView {
   }
 
   onPlayerClick() {
-
+    throw new Error(`Not implemented`);
   }
 
   onSubmitClick() {
-
+    throw new Error(`Not implemented`);
   }
 
   onAnswerChange() {
-
+    throw new Error(`Not implemented`);
   }
 }

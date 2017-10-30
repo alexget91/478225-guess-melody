@@ -1,5 +1,5 @@
 import AbstractView from './abstract-view.js';
-import logo from '../screens/logo.js';
+import logo from '../views/logo.js';
 
 export default class ResultView extends AbstractView {
   constructor(data) {
@@ -31,6 +31,6 @@ export default class ResultView extends AbstractView {
   }
 
   onReplayClick() {
-
+    throw new Error(`Not implemented`);
   }
 }

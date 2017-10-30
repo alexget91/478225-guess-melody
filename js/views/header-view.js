@@ -1,5 +1,5 @@
 import AbstractView from './abstract-view.js';
-import getMistakesHTML from '../screen-data/get-mistakes-html.js';
+import getMistakesHTML from '../views/get-mistakes-html.js';
 import getTimer from '../data/get-timer.js';
 import {gameState} from '../data/game-data.js';
 

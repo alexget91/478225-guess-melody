@@ -1,5 +1,5 @@
 import AbstractView from './abstract-view.js';
-import logo from '../screens/logo.js';
+import logo from '../views/logo.js';
 
 export default class WelcomeView extends AbstractView {
   constructor(data) {
@@ -28,6 +28,6 @@ export default class WelcomeView extends AbstractView {
   }
 
   onPlayClick() {
-
+    throw new Error(`Not implemented`);
   }
 }
