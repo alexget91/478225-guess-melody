@@ -1,7 +1,7 @@
 import {gameSequence as gameSequenceInitial, gameAnswers, gameState} from '../data/game-data.js';
 import showScreen from '../dom-helpers/show-screen.js';
 import clearScreen from '../dom-helpers/clear-screen.js';
-import header from '../screens/header.js';
+import headerPresenter from '../screens/header-presenter.js';
 import artistScreen from '../screens/artist-screen.js';
 import genreScreen from '../screens/genre-screen.js';
 import getDataHeader from '../screen-data/get-data-header.js';
@@ -16,7 +16,6 @@ export default (reset) => {
     gameSequence = [...gameSequenceInitial];
     gameAnswers.length = 0;
     gameState.reset();
-    header.data = getDataHeader(gameState.timeLeft, gameState.mistakesCount);
   }
 
   const question = gameSequence.shift();
@@ -24,8 +23,10 @@ export default (reset) => {
   if (question) {
 
     if (reset) {
+      headerPresenter.view.data = getDataHeader(gameState.timeLeft, gameState.mistakesCount);
+      headerPresenter.initialize();
       clearScreen();
-      showScreen(header.element);
+      showScreen(headerPresenter.view.element);
     } else {
       clearScreen(`.main-wrap`);
     }
