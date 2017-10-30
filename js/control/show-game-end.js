@@ -1,7 +1,7 @@
 import gameData, {gameStatistics, gameState} from '../data/game-data.js';
 import showScreen from '../dom-helpers/show-screen.js';
 import clearScreen from '../dom-helpers/clear-screen.js';
-import result from '../screens/result.js';
+import resultScreen from '../screens/result-screen.js';
 import header from '../screens/header.js';
 import getDataWin from '../screen-data/get-data-win.js';
 import getDataLose from '../screen-data/get-data-lose.js';
@@ -23,7 +23,8 @@ export default () => {
     dataResult = getDataWin(gameResult, comparison);
   }
 
-  result.data = dataResult;
+  resultScreen.view.data = dataResult;
+  resultScreen.initialize();
   clearScreen();
-  showScreen(result.element);
+  showScreen(resultScreen.view.element);
 };

@@ -3,8 +3,8 @@ import getMinutes from '../data/get-minutes.js';
 import getFormattedTime from '../data/get-formatted-time.js';
 import gameData, {gameState} from '../data/game-data.js';
 import showGameEnd from '../control/show-game-end.js';
-import artist from './artist.js';
-import genre from './genre.js';
+import artistScreen from './artist-screen.js';
+import genreScreen from './genre-screen.js';
 import getRadius from '../data/get-radius';
 
 const header = new HeaderView();
@@ -16,9 +16,9 @@ header.onTimerTick = () => {
     header.unbind();
 
     if (gameState.currentLevelIsGenre) {
-      genre.audioPause();
+      genreScreen.view.audioPause();
     } else {
-      artist.audio.pause();
+      artistScreen.view.audio.pause();
     }
 
     showGameEnd();
