@@ -1,5 +1,6 @@
 import checkAnswer from '../control/check-answer.js';
 import ArtistView from '../views/artist-view.js';
+import headerPresenter from '../screens/header-presenter.js';
 
 class ArtistScreen {
   constructor() {
@@ -7,14 +8,18 @@ class ArtistScreen {
   }
 
   initialize() {
+    const timeStart = headerPresenter.view.timer.value;
+
     this.view.onAnswerClick = (evt) => {
+      const timeEnd = headerPresenter.view.timer.value;
+
       this.view.unbind();
 
       const answerLabel = evt.target.classList.contains(`main-answer-preview`) ? evt.target.parentElement : evt.target;
       const isRight = Boolean(document.querySelector(`#${answerLabel.getAttribute(`for`)}`).dataset.right);
 
       this.view.audio.pause();
-      checkAnswer(isRight, 30);
+      checkAnswer(isRight, timeStart - timeEnd);
     };
 
     this.view.onPlayerClick = (evt) => {

@@ -1,5 +1,6 @@
 import checkAnswer from '../control/check-answer.js';
 import GenreView from '../views/genre-view.js';
+import headerPresenter from '../screens/header-presenter.js';
 
 class GenreScreen {
   constructor() {
@@ -8,6 +9,8 @@ class GenreScreen {
   }
 
   initialize() {
+    const timeStart = headerPresenter.view.timer.value;
+
     this.view.onPlayerClick = (evt) => {
       evt.preventDefault();
 
@@ -24,9 +27,11 @@ class GenreScreen {
     this.view.onSubmitClick = (evt) => {
       evt.preventDefault();
 
+      const timeEnd = headerPresenter.view.timer.value;
+
       this.view.unbind();
       this.view.audioPause();
-      checkAnswer(this.isRight, 30);
+      checkAnswer(this.isRight, timeStart - timeEnd);
     };
 
     this.view.onAnswerChange = (evt) => {
