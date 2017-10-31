@@ -38,8 +38,10 @@ export class ResultScreen {
 
     if (Object.values(gameData.ExitCode).indexOf(comparison) !== -1) {
       dataResult = getDataLose(comparison);
+      history.pushState(null, null, `#result?${comparison}`);
     } else {
       dataResult = getDataWin(gameResult, comparison);
+      history.pushState(null, null, `#result?${dataResult.hash}`);
     }
 
     clearScreen();

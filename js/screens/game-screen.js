@@ -20,6 +20,8 @@ export default class GameScreen {
 
     const question = gameSequence.shift();
 
+    // Application.init();
+
     if (question) {
 
       if (reset) {
@@ -29,10 +31,14 @@ export default class GameScreen {
         clearScreen(`.main-wrap`);
       }
 
+      gameState.currentLevel++;
+
       if (question.typeArtist) {
+        history.pushState(null, null, `#game?${gameState.currentLevel}${gameState.notesLeft}${gameState.timeLeft}`);
         gameState.currentLevelIsGenre = false;
         Application.showArtist(question);
       } else {
+        history.pushState(null, null, `#game?${gameState.currentLevel}${gameState.notesLeft}${gameState.timeLeft}`);
         gameState.currentLevelIsGenre = true;
         Application.showGenre(question);
       }
