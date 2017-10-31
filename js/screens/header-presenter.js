@@ -6,13 +6,18 @@ import showGameEnd from '../control/show-game-end.js';
 import artistScreen from './artist-screen.js';
 import genreScreen from './genre-screen.js';
 import getRadius from '../data/get-radius';
+import getDataHeader from '../screen-data/get-data-header.js';
 
 class HeaderPresenter {
   constructor() {
     this.view = new HeaderView();
   }
 
-  initialize() {
+  initialize(timeLeft, mistakesCount) {
+    if (typeof timeLeft !== `undefined` && typeof mistakesCount !== `undefined`) {
+      this.view.data = getDataHeader(timeLeft, mistakesCount);
+    }
+
     this.view.onTimerTick = () => {
       this.view.timer = this.view.timer.tick();
 

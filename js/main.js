@@ -1,5 +1,3 @@
-import welcomeScreen from './screens/welcome-screen.js';
-import showScreen from './dom-helpers/show-screen.js';
+import Application from './control/application.js';
 
-welcomeScreen.initialize();
-showScreen(welcomeScreen.view.element);
+Application.showWelcome();

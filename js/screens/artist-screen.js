@@ -1,14 +1,19 @@
 import checkAnswer from '../control/check-answer.js';
 import ArtistView from '../views/artist-view.js';
 import headerPresenter from '../screens/header-presenter.js';
+import getDataArtist from '../screen-data/get-data-artist.js';
 
 class ArtistScreen {
   constructor() {
     this.view = new ArtistView();
   }
 
-  initialize() {
+  initialize(data) {
     const timeStart = headerPresenter.view.timer.value;
+
+    if (typeof data !== `undefined`) {
+      this.view.data = getDataArtist(data);
+    }
 
     this.view.onAnswerClick = (evt) => {
       const timeEnd = headerPresenter.view.timer.value;

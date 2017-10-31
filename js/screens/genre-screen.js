@@ -1,6 +1,7 @@
 import checkAnswer from '../control/check-answer.js';
 import GenreView from '../views/genre-view.js';
 import headerPresenter from '../screens/header-presenter.js';
+import getDataGenre from '../screen-data/get-data-genre.js';
 
 class GenreScreen {
   constructor() {
@@ -8,8 +9,12 @@ class GenreScreen {
     this.isRight = false;
   }
 
-  initialize() {
+  initialize(data) {
     const timeStart = headerPresenter.view.timer.value;
+
+    if (typeof data !== `undefined`) {
+      this.view.data = getDataGenre(data);
+    }
 
     this.view.onPlayerClick = (evt) => {
       evt.preventDefault();
