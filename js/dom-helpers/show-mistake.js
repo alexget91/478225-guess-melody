@@ -1,6 +1,6 @@
-import header from '../screens/header.js';
 import getMistakesHTML from '../views/get-mistakes-html.js';
+import headerPresenter from '../screens/header-presenter.js';
 
 export default () => {
-  header.element.querySelector(`.main-mistakes`).innerHTML = getMistakesHTML();
+  headerPresenter.view.element.querySelector(`.main-mistakes`).innerHTML = getMistakesHTML();
 };

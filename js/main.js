@@ -1,4 +1,5 @@
-import welcome from './screens/welcome.js';
+import welcomeScreen from './screens/welcome-screen.js';
 import showScreen from './dom-helpers/show-screen.js';
 
-showScreen(welcome.element);
+welcomeScreen.initialize();
+showScreen(welcomeScreen.view.element);

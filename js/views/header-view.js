@@ -1,6 +1,7 @@
 import AbstractView from './abstract-view.js';
 import getMistakesHTML from '../views/get-mistakes-html.js';
 import getTimer from '../data/get-timer.js';
+import getRadius from '../data/get-radius';
 import {gameState} from '../data/game-data.js';
 
 export default class HeaderView extends AbstractView {
@@ -32,9 +33,11 @@ export default class HeaderView extends AbstractView {
   bind() {
     this.headerMin = this.element.querySelector(`.timer-value-mins`);
     this.headerSec = this.element.querySelector(`.timer-value-secs`);
+    this.timerLine = this.element.querySelector(`.timer-line`);
 
     this.timer = getTimer(gameState.timeLeft);
     this.timerInterval = setInterval(this.onTimerTick, 1000);
+    this.timerLine.setAttribute(`stroke-dasharray`, getRadius(1, 370).stroke);
   }
 
   unbind() {
