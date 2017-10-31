@@ -1,4 +1,4 @@
-import musicLibrary from '../data/music-library.js';
+import musicLibrary from '../data/music-library';
 
 export default (question) => {
   const questionData = {

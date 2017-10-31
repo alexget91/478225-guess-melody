@@ -1,7 +1,7 @@
-import checkAnswer from '../control/check-answer.js';
-import GenreView from '../views/genre-view.js';
-import headerPresenter from '../screens/header-presenter.js';
-import getDataGenre from '../screen-data/get-data-genre.js';
+import GenreView from '../views/genre-view';
+import headerPresenter from '../screens/header-presenter';
+import getDataGenre from '../screen-data/get-data-genre';
+import GameScreen from '../screens/game-screen';
 
 class GenreScreen {
   constructor() {
@@ -36,7 +36,7 @@ class GenreScreen {
 
       this.view.unbind();
       this.view.audioPause();
-      checkAnswer(this.isRight, timeStart - timeEnd);
+      GameScreen.checkAnswer(this.isRight, timeStart - timeEnd);
     };
 
     this.view.onAnswerChange = (evt) => {

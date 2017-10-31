@@ -1,10 +1,15 @@
-import clearScreen from '../dom-helpers/clear-screen.js';
-import ResultView from '../views/result-view.js';
-import welcomeScreen from '../screens/welcome-screen.js';
-import dataWelcome from '../screen-data/data-welcome.js';
-import Application from '../control/application.js';
+import gameData, {gameStatistics, gameState} from '../data/game-data';
+import headerPresenter from '../screens/header-presenter';
+import getDataWin from '../screen-data/get-data-win';
+import getDataLose from '../screen-data/get-data-lose';
+import getComparison from '../data/get-comparison';
+import clearScreen from '../dom-helpers/clear-screen';
+import ResultView from '../views/result-view';
+import dataWelcome from '../screen-data/data-welcome';
+import Application from '../application';
 
-class ResultScreen {
+
+export class ResultScreen {
   constructor() {
     this.view = new ResultView();
   }
@@ -16,10 +21,29 @@ class ResultScreen {
 
     this.view.onReplayClick = () => {
       this.view.unbind();
-      welcomeScreen.view.data = dataWelcome;
       clearScreen();
-      Application.showWelcome();
+      Application.showWelcome(dataWelcome);
     };
+  }
+
+  static showGameEnd() {
+    const gameResult = {
+      notesLeft: gameState.notesLeft,
+      timeLeft: gameState.timeLeft
+    };
+    const comparison = getComparison(gameStatistics, gameResult);
+    let dataResult;
+
+    headerPresenter.view.unbind();
+
+    if (Object.values(gameData.ExitCode).indexOf(comparison) !== -1) {
+      dataResult = getDataLose(comparison);
+    } else {
+      dataResult = getDataWin(gameResult, comparison);
+    }
+
+    clearScreen();
+    Application.showResult(dataResult);
   }
 }
 

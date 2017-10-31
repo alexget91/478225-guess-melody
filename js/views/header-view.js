@@ -1,8 +1,8 @@
-import AbstractView from './abstract-view.js';
-import getMistakesHTML from '../views/get-mistakes-html.js';
-import getTimer from '../data/get-timer.js';
+import AbstractView from './abstract-view';
+import getMistakesHTML from '../views/get-mistakes-html';
+import getTimer from '../data/get-timer';
 import getRadius from '../data/get-radius';
-import {gameState} from '../data/game-data.js';
+import {gameState} from '../data/game-data';
 
 export default class HeaderView extends AbstractView {
   constructor(data) {

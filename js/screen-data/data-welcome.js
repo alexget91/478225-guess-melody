@@ -1,6 +1,6 @@
-import gameData from '../data/game-data.js';
-import getNumEnding from '../data/get-num-ending.js';
-import getMinutes from '../data/get-minutes.js';
+import gameData from '../data/game-data';
+import getNumEnding from '../data/get-num-ending';
+import getMinutes from '../data/get-minutes';
 
 const mistakesCount = gameData.NOTES_COUNT - 1;
 const gameTime = getMinutes(gameData.GAME_TIME);

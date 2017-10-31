@@ -1,4 +1,4 @@
-import AbstractView from './abstract-view.js';
+import AbstractView from './abstract-view';
 
 export default class ArtistView extends AbstractView {
   constructor(data) {

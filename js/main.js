@@ -1,3 +1,3 @@
-import Application from './control/application.js';
+import Application from './application';
 
 Application.showWelcome();

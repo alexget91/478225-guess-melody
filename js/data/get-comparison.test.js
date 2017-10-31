@@ -1,6 +1,6 @@
 import assert from 'assert';
-import getComparison from './get-comparison.js';
-import gameData from './game-data.js';
+import getComparison from './get-comparison';
+import gameData from './game-data';
 
 let statistics;
 let result;

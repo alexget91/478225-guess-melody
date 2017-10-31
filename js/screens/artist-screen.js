@@ -1,7 +1,7 @@
-import checkAnswer from '../control/check-answer.js';
-import ArtistView from '../views/artist-view.js';
-import headerPresenter from '../screens/header-presenter.js';
-import getDataArtist from '../screen-data/get-data-artist.js';
+import ArtistView from '../views/artist-view';
+import headerPresenter from '../screens/header-presenter';
+import getDataArtist from '../screen-data/get-data-artist';
+import GameScreen from '../screens/game-screen';
 
 class ArtistScreen {
   constructor() {
@@ -24,7 +24,7 @@ class ArtistScreen {
       const isRight = Boolean(document.querySelector(`#${answerLabel.getAttribute(`for`)}`).dataset.right);
 
       this.view.audio.pause();
-      checkAnswer(isRight, timeStart - timeEnd);
+      GameScreen.checkAnswer(isRight, timeStart - timeEnd);
     };
 
     this.view.onPlayerClick = (evt) => {

@@ -1,5 +1,5 @@
-import AbstractView from './abstract-view.js';
-import logo from '../views/logo.js';
+import AbstractView from './abstract-view';
+import logo from '../views/logo';
 
 export default class WelcomeView extends AbstractView {
   constructor(data) {

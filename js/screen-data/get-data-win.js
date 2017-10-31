@@ -1,7 +1,7 @@
-import gameData, {gameAnswers} from '../data/game-data.js';
-import getNumEnding from '../data/get-num-ending.js';
-import getScore from '../data/get-score.js';
-import getMinutes from '../data/get-minutes.js';
+import gameData, {gameAnswers} from '../data/game-data';
+import getNumEnding from '../data/get-num-ending';
+import getScore from '../data/get-score';
+import getMinutes from '../data/get-minutes';
 
 export default (gameResult, comparison) => {
   const gameScore = getScore(gameAnswers);

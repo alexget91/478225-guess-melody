@@ -1,4 +1,4 @@
-import {gameState} from '../data/game-data.js';
+import {gameState} from '../data/game-data';
 
 export default () => {
   let mistakes = ``;

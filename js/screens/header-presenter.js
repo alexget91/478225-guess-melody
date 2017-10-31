@@ -1,12 +1,12 @@
-import HeaderView from '../views/header-view.js';
-import getMinutes from '../data/get-minutes.js';
-import getFormattedTime from '../data/get-formatted-time.js';
-import gameData, {gameState} from '../data/game-data.js';
-import showGameEnd from '../control/show-game-end.js';
-import artistScreen from './artist-screen.js';
-import genreScreen from './genre-screen.js';
+import HeaderView from '../views/header-view';
+import getMinutes from '../data/get-minutes';
+import getFormattedTime from '../data/get-formatted-time';
+import gameData, {gameState} from '../data/game-data';
+import {ResultScreen} from '../screens/result-screen';
+import artistScreen from './artist-screen';
+import genreScreen from './genre-screen';
 import getRadius from '../data/get-radius';
-import getDataHeader from '../screen-data/get-data-header.js';
+import getDataHeader from '../screen-data/get-data-header';
 
 class HeaderPresenter {
   constructor() {
@@ -30,7 +30,7 @@ class HeaderPresenter {
           artistScreen.view.audio.pause();
         }
 
-        showGameEnd();
+        ResultScreen.showGameEnd();
       } else {
 
         if (this.view.timer.value < gameData.TIMER_BLINK_TIME) {

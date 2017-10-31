@@ -1,5 +1,5 @@
 import assert from 'assert';
-import getNumEnding from './get-num-ending.js';
+import getNumEnding from './get-num-ending';
 
 describe(`Get Plural Type`, () => {
   it(`should return correct word (0 items)`, () => {

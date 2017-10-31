@@ -1,13 +1,13 @@
-import showScreen from '../dom-helpers/show-screen.js';
-import welcomeScreen from '../screens/welcome-screen.js';
-import artistScreen from '../screens/artist-screen.js';
-import genreScreen from '../screens/genre-screen.js';
-import resultScreen from '../screens/result-screen.js';
-import headerPresenter from '../screens/header-presenter.js';
+import showScreen from './dom-helpers/show-screen';
+import welcomeScreen from './screens/welcome-screen';
+import artistScreen from './screens/artist-screen';
+import genreScreen from './screens/genre-screen';
+import resultScreen from './screens/result-screen';
+import headerPresenter from './screens/header-presenter';
 
 export default class Application {
-  static showWelcome() {
-    welcomeScreen.initialize();
+  static showWelcome(data) {
+    welcomeScreen.initialize(data);
     showScreen(welcomeScreen.view.element);
   }
 

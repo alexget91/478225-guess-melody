@@ -1,4 +1,4 @@
-import gameData from './game-data.js';
+import gameData from './game-data';
 
 export default class GameState {
   constructor(notesLeft, timeLeft) {

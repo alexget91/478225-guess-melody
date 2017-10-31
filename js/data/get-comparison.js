@@ -1,4 +1,4 @@
-import gameData from './game-data.js';
+import gameData from './game-data';
 
 // Подсчитывает статистику игры
 export default (statistics, result) => {
