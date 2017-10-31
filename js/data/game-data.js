@@ -1,8 +1,11 @@
+import GameState from './game-state.js';
+
 const gameData = {
   GAME_TITLE: `Угадай мелодию`,
   GAME_TIME: 300,
   QUESTIONS_COUNT: 10,
   FAST_ANSWER_TIME: 30,
+  TIMER_BLINK_TIME: 30,
   NOTES_COUNT: 4,
   AnswerPrice: {
     CORRECT: 1,
@@ -15,11 +18,8 @@ const gameData = {
   }
 };
 
-// Начальные параметры хедера
-export const initialState = {
-  notesLeft: gameData.NOTES_COUNT,
-  timeLeft: gameData.GAME_TIME
-};
+// Параметры хедера
+export const gameState = new GameState(gameData.NOTES_COUNT, gameData.GAME_TIME);
 
 // Массив вопросов игры
 export const gameSequence = [
@@ -36,8 +36,8 @@ export const gameSequence = [
   },
   {
     typeArtist: true,
-    melodyID: 1,
-    answers: new Set([1, 2, 3])
+    melodyID: 2,
+    answers: new Set([3, 2, 1])
   },
   {
     typeArtist: false,
