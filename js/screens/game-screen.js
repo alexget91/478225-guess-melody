@@ -1,21 +1,18 @@
 import {gameSequence as gameSequenceInitial, gameAnswers, gameState} from '../data/game-data';
-import clearScreen from '../dom-helpers/clear-screen';
+import artistScreen from '../screens/artist-screen';
+import genreScreen from '../screens/genre-screen';
+import headerScreen from '../screens/header-screen';
 import Application from '../application';
-import {ResultScreen} from '../screens/result-screen';
-import showMistake from '../dom-helpers/show-mistake';
 
 let gameSequence;
 
 export default class GameScreen {
-  static initialize() {
-    gameSequence = [...gameSequenceInitial];
-    gameAnswers.length = 0;
-    gameState.reset();
-  }
 
-  static showQuestion(reset) {
+  static initialize(reset) {
     if (reset) {
-      this.initialize();
+      gameSequence = [...gameSequenceInitial];
+      gameAnswers.length = 0;
+      gameState.reset();
     }
 
     const question = gameSequence.shift();
@@ -23,23 +20,29 @@ export default class GameScreen {
     if (question) {
 
       if (reset) {
-        clearScreen();
-        Application.showHeader(gameState.timeLeft, gameState.mistakesCount);
-      } else {
-        clearScreen(`.main-wrap`);
+        headerScreen.initialize(gameState.timeLeft, gameState.mistakesCount);
       }
 
+      this.timeStart = headerScreen.view.timer.value;
+
       if (question.typeArtist) {
-        gameState.currentLevelIsGenre = false;
-        Application.showArtist(question);
+        artistScreen.initialize(question);
       } else {
-        gameState.currentLevelIsGenre = true;
-        Application.showGenre(question);
+        genreScreen.initialize(question);
       }
 
     } else {
-      ResultScreen.showGameEnd();
+      Application.showResult();
     }
+  }
+
+  static onAnswerSubmit(view, isRight) {
+    const timeEnd = headerScreen.view.timer.value;
+
+    view.unbind();
+    view.audioToggle();
+
+    this.checkAnswer(isRight, this.timeStart - timeEnd);
   }
 
   static checkAnswer(isRight, time) {
@@ -51,15 +54,15 @@ export default class GameScreen {
 
     if (!gameState.notesLeft) {
 
-      ResultScreen.showGameEnd();
+      Application.showResult();
 
     } else {
 
       if (!isRight) {
-        showMistake();
+        headerScreen.view.showMistakes();
       }
 
-      GameScreen.showQuestion();
+      this.initialize();
     }
   }
 }

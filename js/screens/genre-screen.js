@@ -1,56 +1,50 @@
+import {gameState} from '../data/game-data';
 import GenreView from '../views/genre-view';
-import headerPresenter from '../screens/header-presenter';
 import getDataGenre from '../screen-data/get-data-genre';
 import GameScreen from '../screens/game-screen';
 
 class GenreScreen {
-  constructor() {
-    this.view = new GenreView();
-    this.isRight = false;
-  }
-
   initialize(data) {
-    const timeStart = headerPresenter.view.timer.value;
+    gameState.currentLevelIsGenre = true;
 
     if (typeof data !== `undefined`) {
-      this.view.data = getDataGenre(data);
+      this.view = new GenreView(getDataGenre(data));
     }
 
-    this.view.onPlayerClick = (evt) => {
+    const view = this.view;
+    let isRight = false;
+
+    view.onPlayerClick = (evt) => {
+      evt.preventDefault();
+      view.audioToggle(evt);
+    };
+
+    view.onSubmitClick = (evt) => {
       evt.preventDefault();
 
-      if (evt.target.classList.contains(`player-control--pause`)) {
-        this.view.audioPause();
-      } else {
-        this.view.audioPause();
-        evt.target.classList.add(`player-control--pause`);
-        this.view.playingID = evt.target.parentElement.querySelector(`audio`).dataset.id;
-        this.view.audioPlay();
-      }
+      GameScreen.onAnswerSubmit(this.view, isRight);
     };
 
-    this.view.onSubmitClick = (evt) => {
-      evt.preventDefault();
+    view.onAnswerChange = (evt) => {
+      const answerCheckbox = evt.target;
+      const answerID = view.getAnswerID(answerCheckbox);
+      const userAnswer = view.userAnswer;
 
-      const timeEnd = headerPresenter.view.timer.value;
-
-      this.view.unbind();
-      this.view.audioPause();
-      GameScreen.checkAnswer(this.isRight, timeStart - timeEnd);
-    };
-
-    this.view.onAnswerChange = (evt) => {
-      if (evt.target.checked) {
-        this.view.userAnswer[evt.target.getAttribute(`id`)] = evt.target.dataset.right;
+      if (answerCheckbox.checked) {
+        userAnswer[answerID] = answerCheckbox.dataset.right;
       } else {
-        delete this.view.userAnswer[evt.target.getAttribute(`id`)];
+        delete userAnswer[answerID];
       }
 
-      this.isRight = Object.keys(this.view.userAnswer).length === parseInt(document.querySelector(`.genre`).dataset.rightLength, 10)
-                && Object.values(this.view.userAnswer).reduce((result, it) => (result && Boolean(it)), true);
+      const userAnswerValues = Object.values(userAnswer);
+      const userAnswerLength = userAnswerValues.length;
 
-      this.view.submitToggle(!Object.keys(this.view.userAnswer).length);
+      isRight = userAnswerLength === view.rightAnswerLength && userAnswerValues.reduce((result, it) => result && Boolean(it), true);
+
+      view.submitToggle(!userAnswerLength);
     };
+
+    view.show();
   }
 }
 

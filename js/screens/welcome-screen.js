@@ -3,18 +3,16 @@ import dataWelcome from '../screen-data/data-welcome';
 import GameScreen from '../screens/game-screen';
 
 class WelcomeScreen {
-  constructor() {
+  initialize() {
     this.view = new WelcomeView(dataWelcome);
-  }
 
-  initialize(data) {
-    if (typeof data !== `undefined`) {
-      this.view.data = data;
-    }
+    const view = this.view;
 
-    this.view.onPlayClick = () => {
-      GameScreen.showQuestion(true);
+    view.onPlayClick = () => {
+      GameScreen.initialize(true);
     };
+
+    view.show();
   }
 }
 

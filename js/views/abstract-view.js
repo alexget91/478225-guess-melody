@@ -5,15 +5,6 @@ export default class AbstractView {
     this.data = data;
   }
 
-  get data() {
-    return this._data;
-  }
-
-  set data(data) {
-    this._data = data;
-    delete this._element;
-  }
-
   get template() {
     // возвращает строку, содержащую разметку
     throw new Error(`Not implemented`);

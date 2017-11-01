@@ -1,32 +1,14 @@
 import gameData, {gameStatistics, gameState} from '../data/game-data';
-import headerPresenter from '../screens/header-presenter';
+import headerScreen from '../screens/header-screen';
 import getDataWin from '../screen-data/get-data-win';
 import getDataLose from '../screen-data/get-data-lose';
 import getComparison from '../data/get-comparison';
-import clearScreen from '../dom-helpers/clear-screen';
 import ResultView from '../views/result-view';
-import dataWelcome from '../screen-data/data-welcome';
 import Application from '../application';
 
 
-export class ResultScreen {
-  constructor() {
-    this.view = new ResultView();
-  }
-
-  initialize(data) {
-    if (typeof data !== `undefined`) {
-      this.view.data = data;
-    }
-
-    this.view.onReplayClick = () => {
-      this.view.unbind();
-      clearScreen();
-      Application.showWelcome(dataWelcome);
-    };
-  }
-
-  static showGameEnd() {
+class ResultScreen {
+  initialize() {
     const gameResult = {
       notesLeft: gameState.notesLeft,
       timeLeft: gameState.timeLeft
@@ -34,7 +16,7 @@ export class ResultScreen {
     const comparison = getComparison(gameStatistics, gameResult);
     let dataResult;
 
-    headerPresenter.view.unbind();
+    headerScreen.view.unbind();
 
     if (Object.values(gameData.ExitCode).indexOf(comparison) !== -1) {
       dataResult = getDataLose(comparison);
@@ -42,8 +24,16 @@ export class ResultScreen {
       dataResult = getDataWin(gameResult, comparison);
     }
 
-    clearScreen();
-    Application.showResult(dataResult);
+    this.view = new ResultView(dataResult);
+
+    const view = this.view;
+
+    view.onReplayClick = () => {
+      view.unbind();
+      Application.showWelcome();
+    };
+
+    view.show();
   }
 }
 
