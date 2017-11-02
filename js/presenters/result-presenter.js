@@ -1,5 +1,5 @@
 import gameData, {gameStatistics, gameState} from '../data/game-data';
-import headerScreen from '../screens/header-screen';
+import headerPresenter from '../presenters/header-presenter';
 import getDataWin from '../screen-data/get-data-win';
 import getDataLose from '../screen-data/get-data-lose';
 import getComparison from '../data/get-comparison';
@@ -7,7 +7,7 @@ import ResultView from '../views/result-view';
 import Application from '../application';
 
 
-class ResultScreen {
+class ResultPresenter {
   initialize() {
     const gameResult = {
       notesLeft: gameState.notesLeft,
@@ -16,7 +16,7 @@ class ResultScreen {
     const comparison = getComparison(gameStatistics, gameResult);
     let dataResult;
 
-    headerScreen.view.unbind();
+    headerPresenter.view.unbind();
 
     if (Object.values(gameData.ExitCode).indexOf(comparison) !== -1) {
       dataResult = getDataLose(comparison);
@@ -37,4 +37,4 @@ class ResultScreen {
   }
 }
 
-export default new ResultScreen();
+export default new ResultPresenter();

@@ -1,9 +1,9 @@
 import {gameState} from '../data/game-data';
 import ArtistView from '../views/artist-view';
 import getDataArtist from '../screen-data/get-data-artist';
-import GameScreen from '../screens/game-screen';
+import GamePresenter from '../presenters/game-presenter';
 
-class ArtistScreen {
+class ArtistPresenter {
   initialize(data) {
     gameState.currentLevelIsGenre = false;
 
@@ -17,7 +17,7 @@ class ArtistScreen {
       const answerLabel = evt.target.classList.contains(`main-answer-preview`) ? evt.target.parentElement : evt.target;
       const isRight = Boolean(document.querySelector(`#${answerLabel.getAttribute(`for`)}`).dataset.right);
 
-      GameScreen.onAnswerSubmit(this.view, isRight);
+      GamePresenter.onAnswerSubmit(this.view, isRight);
     };
 
     view.onPlayerClick = (evt) => {
@@ -29,4 +29,4 @@ class ArtistScreen {
   }
 }
 
-export default new ArtistScreen();
+export default new ArtistPresenter();

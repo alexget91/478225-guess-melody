@@ -59,7 +59,6 @@ export default class GenreView extends AbstractView {
   }
 
   bind() {
-    this.genreScreen = this.element.querySelector(`.main--level-genre`);
     this.submitBtn = this.element.querySelector(`.genre-answer-send`);
     this.answers = this.element.querySelectorAll(`.genre-answer input[name="answer"]`);
     this.playingID = null;

@@ -1,12 +1,12 @@
 import {gameSequence as gameSequenceInitial, gameAnswers, gameState} from '../data/game-data';
-import artistScreen from '../screens/artist-screen';
-import genreScreen from '../screens/genre-screen';
-import headerScreen from '../screens/header-screen';
+import artistPresenter from '../presenters/artist-presenter';
+import genrePresenter from '../presenters/genre-presenter';
+import headerPresenter from '../presenters/header-presenter';
 import Application from '../application';
 
 let gameSequence;
 
-export default class GameScreen {
+export default class GamePresenter {
 
   static initialize(reset) {
     if (reset) {
@@ -20,15 +20,15 @@ export default class GameScreen {
     if (question) {
 
       if (reset) {
-        headerScreen.initialize(gameState.timeLeft, gameState.mistakesCount);
+        headerPresenter.initialize(gameState.timeLeft, gameState.mistakesCount);
       }
 
-      this.timeStart = headerScreen.view.timer.value;
+      this.timeStart = headerPresenter.view.timer.value;
 
       if (question.typeArtist) {
-        artistScreen.initialize(question);
+        artistPresenter.initialize(question);
       } else {
-        genreScreen.initialize(question);
+        genrePresenter.initialize(question);
       }
 
     } else {
@@ -37,7 +37,7 @@ export default class GameScreen {
   }
 
   static onAnswerSubmit(view, isRight) {
-    const timeEnd = headerScreen.view.timer.value;
+    const timeEnd = headerPresenter.view.timer.value;
 
     view.unbind();
     view.audioToggle();
@@ -59,7 +59,7 @@ export default class GameScreen {
     } else {
 
       if (!isRight) {
-        headerScreen.view.showMistakes();
+        headerPresenter.view.showMistakes();
       }
 
       this.initialize();

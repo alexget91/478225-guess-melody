@@ -1,19 +1,19 @@
 import WelcomeView from '../views/welcome-view';
 import dataWelcome from '../screen-data/data-welcome';
-import GameScreen from '../screens/game-screen';
+import GamePresenter from '../presenters/game-presenter';
 
-class WelcomeScreen {
+class WelcomePresenter {
   initialize() {
     this.view = new WelcomeView(dataWelcome);
 
     const view = this.view;
 
     view.onPlayClick = () => {
-      GameScreen.initialize(true);
+      GamePresenter.initialize(true);
     };
 
     view.show();
   }
 }
 
-export default new WelcomeScreen();
+export default new WelcomePresenter();

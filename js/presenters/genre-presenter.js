@@ -1,9 +1,9 @@
 import {gameState} from '../data/game-data';
 import GenreView from '../views/genre-view';
 import getDataGenre from '../screen-data/get-data-genre';
-import GameScreen from '../screens/game-screen';
+import GamePresenter from '../presenters/game-presenter';
 
-class GenreScreen {
+class GenrePresenter {
   initialize(data) {
     gameState.currentLevelIsGenre = true;
 
@@ -22,7 +22,7 @@ class GenreScreen {
     view.onSubmitClick = (evt) => {
       evt.preventDefault();
 
-      GameScreen.onAnswerSubmit(this.view, isRight);
+      GamePresenter.onAnswerSubmit(this.view, isRight);
     };
 
     view.onAnswerChange = (evt) => {
@@ -48,4 +48,4 @@ class GenreScreen {
   }
 }
 
-export default new GenreScreen();
+export default new GenrePresenter();

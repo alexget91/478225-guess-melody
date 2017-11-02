@@ -2,13 +2,13 @@ import HeaderView from '../views/header-view';
 import getMinutes from '../data/get-minutes';
 import getFormattedTime from '../data/get-formatted-time';
 import gameData, {gameState} from '../data/game-data';
-import artistScreen from './artist-screen';
-import genreScreen from './genre-screen';
+import artistPresenter from './artist-presenter';
+import genrePresenter from './genre-presenter';
 import getRadius from '../data/get-radius';
 import getDataHeader from '../screen-data/get-data-header';
 import Application from '../application';
 
-class HeaderScreen {
+class HeaderPresenter {
   initialize(timeLeft, mistakesCount) {
     if (typeof timeLeft !== `undefined` && typeof mistakesCount !== `undefined`) {
       this.view = new HeaderView(getDataHeader(timeLeft, mistakesCount));
@@ -23,9 +23,9 @@ class HeaderScreen {
         view.unbind();
 
         if (gameState.currentLevelIsGenre) {
-          genreScreen.view.audioToggle();
+          genrePresenter.view.audioToggle();
         } else {
-          artistScreen.view.audioToggle();
+          artistPresenter.view.audioToggle();
         }
 
         Application.showResult();
@@ -54,4 +54,4 @@ class HeaderScreen {
   }
 }
 
-export default new HeaderScreen();
+export default new HeaderPresenter();
