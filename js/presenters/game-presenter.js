@@ -17,6 +17,8 @@ export default class GamePresenter {
 
     const question = gameSequence.shift();
 
+    // Application.init();
+
     if (question) {
 
       if (reset) {

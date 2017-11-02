@@ -20,8 +20,10 @@ class ResultPresenter {
 
     if (Object.values(gameData.ExitCode).indexOf(comparison) !== -1) {
       dataResult = getDataLose(comparison);
+      history.pushState(null, null, `#result?${comparison}`);
     } else {
       dataResult = getDataWin(gameResult, comparison);
+      history.pushState(null, null, `#result?${dataResult.hash}`);
     }
 
     this.view = new ResultView(dataResult);
