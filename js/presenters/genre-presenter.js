@@ -10,7 +10,7 @@ class GenrePresenter {
     this.view = new GenreView(getDataGenre(data));
 
     const view = this.view;
-    let isRight = false;
+    let userAnswerValues;
 
     view.onPlayerClick = (evt) => {
       evt.preventDefault();
@@ -20,7 +20,7 @@ class GenrePresenter {
     view.onSubmitClick = (evt) => {
       evt.preventDefault();
 
-      GamePresenter.onAnswerSubmit(this.view, isRight);
+      GamePresenter.onAnswerSubmit(view, view.checkAnswer(userAnswerValues));
     };
 
     view.onAnswerChange = (evt) => {
@@ -34,12 +34,9 @@ class GenrePresenter {
         delete userAnswer[answerID];
       }
 
-      const userAnswerValues = Object.values(userAnswer);
-      const userAnswerLength = userAnswerValues.length;
+      userAnswerValues = Object.values(userAnswer);
 
-      isRight = userAnswerLength === view.rightAnswerLength && userAnswerValues.reduce((result, it) => result && Boolean(it), true);
-
-      view.submitToggle(!userAnswerLength);
+      view.submitToggle(!userAnswerValues.length);
     };
 
     view.show();

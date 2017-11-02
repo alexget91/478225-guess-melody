@@ -89,6 +89,12 @@ export default class ArtistView extends AbstractView {
     }
   }
 
+  checkAnswer(evtTarget) {
+    const answerLabel = evtTarget.classList.contains(`main-answer-preview`) ? evtTarget.parentElement : evtTarget;
+
+    return Boolean(document.querySelector(`#${answerLabel.getAttribute(`for`)}`).dataset.right);
+  }
+
   onAnswerClick() {
     throw new Error(`Not implemented`);
   }

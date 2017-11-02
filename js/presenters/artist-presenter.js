@@ -12,10 +12,7 @@ class ArtistPresenter {
     const view = this.view;
 
     view.onAnswerClick = (evt) => {
-      const answerLabel = evt.target.classList.contains(`main-answer-preview`) ? evt.target.parentElement : evt.target;
-      const isRight = Boolean(document.querySelector(`#${answerLabel.getAttribute(`for`)}`).dataset.right);
-
-      GamePresenter.onAnswerSubmit(this.view, isRight);
+      GamePresenter.onAnswerSubmit(view, view.checkAnswer(evt.target));
     };
 
     view.onPlayerClick = (evt) => {
