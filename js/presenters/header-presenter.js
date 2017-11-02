@@ -10,9 +10,7 @@ import Application from '../application';
 
 class HeaderPresenter {
   initialize(timeLeft, mistakesCount) {
-    if (typeof timeLeft !== `undefined` && typeof mistakesCount !== `undefined`) {
-      this.view = new HeaderView(getDataHeader(timeLeft, mistakesCount));
-    }
+    this.view = new HeaderView(getDataHeader(timeLeft, mistakesCount));
 
     const view = this.view;
 

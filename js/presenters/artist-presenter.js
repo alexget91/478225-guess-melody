@@ -7,9 +7,7 @@ class ArtistPresenter {
   initialize(data) {
     gameState.currentLevelIsGenre = false;
 
-    if (typeof data !== `undefined`) {
-      this.view = new ArtistView(getDataArtist(data));
-    }
+    this.view = new ArtistView(getDataArtist(data));
 
     const view = this.view;
 

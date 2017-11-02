@@ -7,9 +7,7 @@ class GenrePresenter {
   initialize(data) {
     gameState.currentLevelIsGenre = true;
 
-    if (typeof data !== `undefined`) {
-      this.view = new GenreView(getDataGenre(data));
-    }
+    this.view = new GenreView(getDataGenre(data));
 
     const view = this.view;
     let isRight = false;
