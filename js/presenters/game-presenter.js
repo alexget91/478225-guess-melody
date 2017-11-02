@@ -23,8 +23,11 @@ export default class GamePresenter {
     if (gameState.currentLevel < gameSequence.length) {
       const question = gameSequence[gameState.currentLevel++];
 
-      if (!data) {
+      if (!data || !headerPresenter.view) {
         headerPresenter.initialize(gameState.timeLeft, gameState.mistakesCount);
+        if (gameState.mistakesCount) {
+          headerPresenter.view.showMistakes();
+        }
       }
 
       this.timeStart = headerPresenter.view.timer.value;

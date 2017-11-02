@@ -6,7 +6,9 @@ import getDataWin from '../screen-data/get-data-win';
 
 class ResultPresenter {
   initialize(data) {
-    headerPresenter.view.unbind();
+    if (headerPresenter.view) {
+      headerPresenter.view.unbind();
+    }
 
     const dataDecode = ResultPresenter.dataDecode(data);
     let dataResult;
