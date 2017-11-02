@@ -1,5 +1,5 @@
 import assert from 'assert';
-import getTimer from './get-timer.js';
+import getTimer from './get-timer';
 
 describe(`Get timer`, () => {
   it(`should return correct value of time`, () => {

@@ -1,5 +1,5 @@
-import AbstractView from './abstract-view.js';
-import logo from '../views/logo.js';
+import AbstractView from './abstract-view';
+import logo from '../views/logo';
 
 export default class WelcomeView extends AbstractView {
   constructor(data) {
@@ -16,6 +16,12 @@ export default class WelcomeView extends AbstractView {
           ${this.data.content.text}
         </p>
       </section>`;
+  }
+
+  show() {
+    const app = document.querySelector(`.app`);
+
+    app.replaceChild(this.element, app.querySelector(`.main`));
   }
 
   bind() {

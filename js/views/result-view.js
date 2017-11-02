@@ -1,5 +1,5 @@
-import AbstractView from './abstract-view.js';
-import logo from '../views/logo.js';
+import AbstractView from './abstract-view';
+import logo from '../views/logo';
 
 export default class ResultView extends AbstractView {
   constructor(data) {
@@ -18,6 +18,12 @@ export default class ResultView extends AbstractView {
         ${comparison}
         <span role="button" tabindex="0" class="main-replay">${this.data.replay}</span>
       </section>`;
+  }
+
+  show() {
+    const app = document.querySelector(`.app`);
+
+    app.replaceChild(this.element, app.querySelector(`.main`));
   }
 
   bind() {

@@ -1,5 +1,5 @@
-import getFormattedTime from '../data/get-formatted-time.js';
-import getMinutes from '../data/get-minutes.js';
+import getFormattedTime from '../data/get-formatted-time';
+import getMinutes from '../data/get-minutes';
 
 export default (time, mistakes) => {
   const headerTime = getMinutes(time);

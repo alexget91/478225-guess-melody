@@ -1,4 +1,4 @@
-import gameData from './game-data.js';
+import gameData from './game-data';
 
 // Подсчитывает количество очков и количество быстрых ответов пользователя
 export default (answers) => {

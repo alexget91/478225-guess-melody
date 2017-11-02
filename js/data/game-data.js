@@ -1,4 +1,4 @@
-import GameState from './game-state.js';
+import GameState from './game-state';
 
 const gameData = {
   GAME_TITLE: `Угадай мелодию`,
