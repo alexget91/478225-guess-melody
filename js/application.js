@@ -27,7 +27,8 @@ export default class Application {
   }
 
   static changeHash(id) {
-    const controller = Application.routes[id];
+    // const controller = Application.routes[id];
+    console.log(`changeHash`);
 
     /* if (controller) {
       controller.init();

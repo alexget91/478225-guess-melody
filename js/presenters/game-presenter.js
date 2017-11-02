@@ -28,8 +28,10 @@ export default class GamePresenter {
       this.timeStart = headerPresenter.view.timer.value;
 
       if (question.typeArtist) {
+        history.pushState(null, null, `#game?${gameState.currentLevel}${gameState.notesLeft}${gameState.timeLeft}`);
         artistPresenter.initialize(question);
       } else {
+        history.pushState(null, null, `#game?${gameState.currentLevel}${gameState.notesLeft}${gameState.timeLeft}`);
         genrePresenter.initialize(question);
       }
 
