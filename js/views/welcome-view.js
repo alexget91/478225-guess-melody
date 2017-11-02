@@ -18,6 +18,12 @@ export default class WelcomeView extends AbstractView {
       </section>`;
   }
 
+  show() {
+    const app = document.querySelector(`.app`);
+
+    app.replaceChild(this.element, app.querySelector(`.main`));
+  }
+
   bind() {
     this.play = this.element.querySelector(`.main-play`);
     this.play.addEventListener(`click`, this.onPlayClick);

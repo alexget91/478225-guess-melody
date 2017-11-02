@@ -20,6 +20,12 @@ export default class ResultView extends AbstractView {
       </section>`;
   }
 
+  show() {
+    const app = document.querySelector(`.app`);
+
+    app.replaceChild(this.element, app.querySelector(`.main`));
+  }
+
   bind() {
     this.replay = this.element.querySelector(`.main-replay`);
 

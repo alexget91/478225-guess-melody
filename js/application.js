@@ -1,10 +1,6 @@
-import showScreen from './dom-helpers/show-screen';
-import welcomeScreen from './screens/welcome-screen';
-import artistScreen from './screens/artist-screen';
-import genreScreen from './screens/genre-screen';
-import resultScreen from './screens/result-screen';
-import headerPresenter from './screens/header-presenter';
-import {gameState} from './data/game-data';
+import welcomePresenter from './presenters/welcome-presenter';
+import GamePresenter from './presenters/game-presenter';
+import resultPresenter from './presenters/result-presenter';
 
 const ControllerId = {
   WELCOME: ``,
@@ -15,9 +11,9 @@ const ControllerId = {
 export default class Application {
   static init(questData) {
     Application.routes = {
-      [ControllerId.WELCOME]: welcomeScreen,
+      [ControllerId.WELCOME]: welcomePresenter,
       // [ControllerId.GAME]: new GameScreen(questData),
-      [ControllerId.RESULT]: resultScreen
+      [ControllerId.RESULT]: resultPresenter
     };
 
     const hashChangeHandler = () => {
@@ -38,29 +34,16 @@ export default class Application {
     } */
   }
 
-  static showWelcome(data) {
+  static showWelcome() {
     history.pushState(null, null, `/`);
-    welcomeScreen.initialize(data);
-    showScreen(welcomeScreen.view.element);
+    welcomePresenter.initialize();
   }
 
-  static showArtist(data) {
-    artistScreen.initialize(data);
-    showScreen(artistScreen.view.element);
+  static showGameScreen() {
+    GamePresenter.initialize();
   }
 
-  static showGenre(data) {
-    genreScreen.initialize(data);
-    showScreen(genreScreen.view.element);
-  }
-
-  static showResult(data) {
-    resultScreen.initialize(data);
-    showScreen(resultScreen.view.element);
-  }
-
-  static showHeader(timeLeft, mistakesCount) {
-    headerPresenter.initialize(timeLeft, mistakesCount);
-    showScreen(headerPresenter.view.element);
+  static showResult() {
+    resultPresenter.initialize();
   }
 }
