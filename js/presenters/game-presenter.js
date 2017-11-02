@@ -17,7 +17,7 @@ export default class GamePresenter {
 
     const question = gameSequence.shift();
 
-    // Application.init();
+    Application.init();
 
     if (question) {
 
@@ -26,12 +26,11 @@ export default class GamePresenter {
       }
 
       this.timeStart = headerPresenter.view.timer.value;
+      history.pushState(null, null, `#game?${gameState.currentLevel}${gameState.notesLeft}${gameState.timeLeft}`);
 
       if (question.typeArtist) {
-        history.pushState(null, null, `#game?${gameState.currentLevel}${gameState.notesLeft}${gameState.timeLeft}`);
         artistPresenter.initialize(question);
       } else {
-        history.pushState(null, null, `#game?${gameState.currentLevel}${gameState.notesLeft}${gameState.timeLeft}`);
         genrePresenter.initialize(question);
       }
 

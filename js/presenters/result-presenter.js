@@ -16,6 +16,7 @@ class ResultPresenter {
     const comparison = getComparison(gameStatistics, gameResult);
     let dataResult;
 
+    Application.init();
     headerPresenter.view.unbind();
 
     if (Object.values(gameData.ExitCode).indexOf(comparison) !== -1) {

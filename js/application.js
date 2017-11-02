@@ -36,7 +36,6 @@ export default class Application {
   }
 
   static showWelcome() {
-    history.pushState(null, null, `/`);
     welcomePresenter.initialize();
   }
 
