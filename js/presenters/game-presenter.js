@@ -1,32 +1,33 @@
-import {gameSequence as gameSequenceInitial, gameAnswers, gameState} from '../data/game-data';
+import {gameSequence, gameAnswers, gameState} from '../data/game-data';
 import artistPresenter from '../presenters/artist-presenter';
 import genrePresenter from '../presenters/genre-presenter';
 import headerPresenter from '../presenters/header-presenter';
+import getDataResult from '../screen-data/get-data-result';
 import Application from '../application';
-
-let gameSequence;
 
 export default class GamePresenter {
 
-  static initialize(reset) {
-    if (reset) {
-      gameSequence = [...gameSequenceInitial];
+  static initialize(data) {
+    data = this.dataDecode(data);
+
+    if (!data) {
       gameAnswers.length = 0;
       gameState.reset();
+      history.pushState(null, null, `#game`);
+    } else {
+      gameState.currentLevel = data.currentLevel;
+      gameState.notesLeft = data.notesLeft;
+      gameState.timeLeft = data.timeLeft;
     }
 
-    const question = gameSequence.shift();
+    if (gameState.currentLevel < gameSequence.length) {
+      const question = gameSequence[gameState.currentLevel++];
 
-    Application.init();
-
-    if (question) {
-
-      if (reset) {
+      if (!data) {
         headerPresenter.initialize(gameState.timeLeft, gameState.mistakesCount);
       }
 
       this.timeStart = headerPresenter.view.timer.value;
-      history.pushState(null, null, `#game?${gameState.currentLevel}${gameState.notesLeft}${gameState.timeLeft}`);
 
       if (question.typeArtist) {
         artistPresenter.initialize(question);
@@ -35,8 +36,16 @@ export default class GamePresenter {
       }
 
     } else {
-      Application.showResult();
+      Application.showResult(getDataResult());
     }
+  }
+
+  static dataDecode(data) {
+    return data ? {
+      currentLevel: parseInt(data.substr(0, 2), 10),
+      notesLeft: parseInt(data.substr(2, 2), 10),
+      timeLeft: parseInt(data.substr(4), 10)
+    } : false;
   }
 
   static onAnswerSubmit(view, isRight) {
@@ -52,12 +61,12 @@ export default class GamePresenter {
     gameAnswers.push({isRight, time});
 
     if (!isRight) {
-      gameState.notesLeft -= 1;
+      gameState.notesLeft--;
     }
 
     if (!gameState.notesLeft) {
 
-      Application.showResult();
+      Application.showResult(getDataResult());
 
     } else {
 
@@ -65,7 +74,7 @@ export default class GamePresenter {
         headerPresenter.view.showMistakes();
       }
 
-      this.initialize();
+      Application.showGameScreen([gameState.currentLevel, gameState.notesLeft, gameState.timeLeft]);
     }
   }
 }
