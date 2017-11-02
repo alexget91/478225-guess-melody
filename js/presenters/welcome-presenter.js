@@ -4,7 +4,7 @@ import Application from '../application';
 
 class WelcomePresenter {
   initialize() {
-    history.pushState(null, null, `/`);
+    history.pushState(null, null, ` `);
     this.view = new WelcomeView(dataWelcome);
 
     const view = this.view;
