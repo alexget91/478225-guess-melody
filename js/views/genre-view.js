@@ -1,4 +1,5 @@
 import AbstractView from './abstract-view';
+import {gameMusic} from '../data/game-data';
 
 export default class GenreView extends AbstractView {
   constructor(data) {
@@ -65,11 +66,13 @@ export default class GenreView extends AbstractView {
     this.players = {};
     this.userAnswer = {};
 
-    [].forEach.call(this.element.querySelectorAll(`.player`), (el) => {
-      const audio = el.querySelector(`audio`);
 
-      this.players[audio.dataset.id] = {
-        audio: new Audio(audio.getAttribute(`src`)),
+    [].forEach.call(this.element.querySelectorAll(`.player`), (el, i) => {
+      const audioObject = gameMusic[this.data.answers[i].src];
+      audioObject.currentTime = 0;
+
+      this.players[i] = {
+        audio: audioObject,
         control: el.querySelector(`.player-control`)
       };
     });

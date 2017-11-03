@@ -1,7 +1,6 @@
 import {QuestionType, gameSequence} from '../data/game-data';
 
 export default (data) => {
-  console.log(data);
   const audioLinks = new Set();
 
   Object.keys(data).forEach((el, i) => {

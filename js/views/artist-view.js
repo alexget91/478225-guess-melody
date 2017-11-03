@@ -28,7 +28,6 @@ export default class ArtistView extends AbstractView {
         <h2 class="title main-title">${this.data.question}</h2>
         <div class="player-wrapper">
           <div class="player">
-            <audio src="${this.data.src}"></audio>
             <button class="player-control player-control--pause"></button>
             <div class="player-track">
               <span class="player-status"></span>
@@ -58,9 +57,8 @@ export default class ArtistView extends AbstractView {
     this.answers = this.element.querySelectorAll(`.main-answer`);
     this.player = this.element.querySelector(`.player`);
     this.playerControl = this.player.querySelector(`.player-control`);
-    // this.audio = new Audio(this.player.querySelector(`audio`).getAttribute(`src`));
-    this.audio = gameMusic[this.player.querySelector(`audio`).getAttribute(`src`)];
-    // this.audio.currentTime = 0;
+    this.audio = gameMusic[this.data.src];
+    this.audio.currentTime = 0;
 
     this.audioToggle(true);
 

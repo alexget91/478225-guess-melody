@@ -1,4 +1,4 @@
-import {gameState, gameSequence} from '../data/game-data';
+import {gameState} from '../data/game-data';
 import GenreView from '../views/genre-view';
 import GamePresenter from '../presenters/game-presenter';
 
@@ -39,7 +39,6 @@ class GenrePresenter {
     };
 
     view.show();
-    console.log(gameSequence);
   }
 }
 

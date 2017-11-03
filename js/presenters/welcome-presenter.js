@@ -15,7 +15,6 @@ class WelcomePresenter {
     };
 
     view.show();
-    console.log(gameSequence);
   }
 }
 

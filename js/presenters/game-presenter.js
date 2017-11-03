@@ -31,7 +31,6 @@ export default class GamePresenter {
       }
 
       this.timeStart = headerPresenter.view.timer.value;
-
       if (question.questionType === QuestionType.ARTIST) {
         artistPresenter.initialize(question);
       } else {

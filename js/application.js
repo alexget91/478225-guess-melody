@@ -71,5 +71,4 @@ splash.show();
 Loader.loadData()
     .then(transformData)
     .then((links) => preloadAudio(links))
-    .then((data) => Application.initialize(data))
     .catch(window.console.error);
