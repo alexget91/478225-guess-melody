@@ -1,7 +1,7 @@
 import welcomePresenter from './presenters/welcome-presenter';
 import GamePresenter from './presenters/game-presenter';
 import resultPresenter from './presenters/result-presenter';
-import getFormattedTime from './data/get-formatted-time';
+import ConvertData from './data/convert-data';
 
 const ControllerId = {
   WELCOME: ``,
@@ -13,19 +13,6 @@ const routes = {
   [ControllerId.WELCOME]: welcomePresenter,
   [ControllerId.GAME]: GamePresenter,
   [ControllerId.RESULT]: resultPresenter
-};
-
-const dataEncode = (state) => {
-  let code = ``;
-
-  if (state) {
-    code = Object.values(state).reduce((result, it) => {
-      result += getFormattedTime(it);
-      return result;
-    }, ``);
-  }
-
-  return code;
 };
 
 export default class Application {
@@ -53,10 +40,10 @@ export default class Application {
   }
 
   static showGameScreen(state = ``) {
-    location.hash = `${ControllerId.GAME}?${dataEncode(state)}`;
+    location.hash = `${ControllerId.GAME}?${ConvertData.encode(state)}`;
   }
 
   static showResult(state) {
-    location.hash = `${ControllerId.RESULT}?${dataEncode(state)}`;
+    location.hash = `${ControllerId.RESULT}?${ConvertData.encode(state)}`;
   }
 }

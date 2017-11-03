@@ -4,20 +4,19 @@ import genrePresenter from '../presenters/genre-presenter';
 import headerPresenter from '../presenters/header-presenter';
 import getDataResult from '../screen-data/get-data-result';
 import Application from '../application';
+import ConvertData from '../data/convert-data';
 
 export default class GamePresenter {
 
   static initialize(data) {
-    data = this.dataDecode(data);
+    data = ConvertData.decode(data);
 
     if (!data) {
       gameAnswers.length = 0;
       gameState.reset();
       history.pushState(null, null, `#game`);
     } else {
-      gameState.currentLevel = data.currentLevel;
-      gameState.notesLeft = data.notesLeft;
-      gameState.timeLeft = data.timeLeft;
+      [gameState.currentLevel, gameState.notesLeft, gameState.timeLeft] = data;
     }
 
     if (gameState.currentLevel < gameSequence.length) {
@@ -41,14 +40,6 @@ export default class GamePresenter {
     } else {
       Application.showResult(getDataResult());
     }
-  }
-
-  static dataDecode(data) {
-    return data ? {
-      currentLevel: parseInt(data.substr(0, 2), 10),
-      notesLeft: parseInt(data.substr(2, 2), 10),
-      timeLeft: parseInt(data.substr(4), 10)
-    } : false;
   }
 
   static onAnswerSubmit(view, isRight) {

@@ -3,6 +3,7 @@ import ResultView from '../views/result-view';
 import Application from '../application';
 import getDataLose from '../screen-data/get-data-lose';
 import getDataWin from '../screen-data/get-data-win';
+import ConvertData from '../data/convert-data';
 
 class ResultPresenter {
   initialize(data) {
@@ -10,13 +11,17 @@ class ResultPresenter {
       headerPresenter.view.unbind();
     }
 
-    const dataDecode = ResultPresenter.dataDecode(data);
+    const isWin = data.length > 2;
+    const dataDecode = {};
     let dataResult;
 
-    if (dataDecode.isWin) {
-      dataResult = getDataWin(dataDecode.result);
+    [dataDecode.min, dataDecode.sec, dataDecode.score, dataDecode.fastCount,
+      dataDecode.mistakes, dataDecode.place, dataDecode.playersCount, dataDecode.percent] = ConvertData.decode(data);
+
+    if (isWin) {
+      dataResult = getDataWin(dataDecode);
     } else {
-      dataResult = getDataLose(dataDecode.result);
+      dataResult = getDataLose(dataDecode);
     }
 
     this.view = new ResultView(dataResult);
@@ -29,29 +34,6 @@ class ResultPresenter {
     };
 
     view.show();
-  }
-
-  static dataDecode(data) {
-    let result;
-    let isWin = false;
-
-    if (data.length > 2) {
-      result = {
-        min: parseInt(data.substr(0, 2), 10),
-        sec: parseInt(data.substr(2, 2), 10),
-        score: parseInt(data.substr(4, 2), 10),
-        fastCount: parseInt(data.substr(6, 2), 10),
-        mistakes: parseInt(data.substr(8, 2), 10),
-        place: parseInt(data.substr(10, 2), 10),
-        playersCount: parseInt(data.substr(12, 2), 10),
-        percent: parseInt(data.substr(14), 10)
-      };
-      isWin = true;
-    } else {
-      result = parseInt(data, 10);
-    }
-
-    return {result, isWin};
   }
 }
 
