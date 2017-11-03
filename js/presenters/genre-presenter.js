@@ -1,13 +1,12 @@
-import {gameState} from '../data/game-data';
+import {gameState, gameSequence} from '../data/game-data';
 import GenreView from '../views/genre-view';
-import getDataGenre from '../screen-data/get-data-genre';
 import GamePresenter from '../presenters/game-presenter';
 
 class GenrePresenter {
   initialize(data) {
     gameState.currentLevelIsGenre = true;
 
-    this.view = new GenreView(getDataGenre(data));
+    this.view = new GenreView(data);
 
     const view = this.view;
     let userAnswerValues;
@@ -40,6 +39,7 @@ class GenrePresenter {
     };
 
     view.show();
+    console.log(gameSequence);
   }
 }
 

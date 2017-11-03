@@ -1,13 +1,12 @@
 import {gameState} from '../data/game-data';
 import ArtistView from '../views/artist-view';
-import getDataArtist from '../screen-data/get-data-artist';
 import GamePresenter from '../presenters/game-presenter';
 
 class ArtistPresenter {
   initialize(data) {
     gameState.currentLevelIsGenre = false;
 
-    this.view = new ArtistView(getDataArtist(data));
+    this.view = new ArtistView(data);
 
     const view = this.view;
 

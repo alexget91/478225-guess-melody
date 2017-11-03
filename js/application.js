@@ -5,6 +5,7 @@ import getFormattedTime from './data/get-formatted-time';
 import SplashScreen from './views/splash-screen';
 import Loader from './loader';
 import transformData from './data/transform-data';
+import preloadAudio from './data/preload-audio';
 
 const ControllerId = {
   WELCOME: ``,
@@ -64,11 +65,11 @@ export default class Application {
   }
 }
 
-/* const splash = new SplashScreen();
+const splash = new SplashScreen();
 splash.show();
 
 Loader.loadData()
     .then(transformData)
-    .catch(window.console.error); */
-
-Application.initialize();
+    .then((links) => preloadAudio(links))
+    .then((data) => Application.initialize(data))
+    .catch(window.console.error);

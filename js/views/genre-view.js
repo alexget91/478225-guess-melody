@@ -8,28 +8,28 @@ export default class GenreView extends AbstractView {
   get template() {
     let answers = ``;
 
-    this.data.answers.forEach((el) => {
-      const right = el.right ? `true` : ``;
+    this.data.answers.forEach((el, i) => {
+      const right = el.isCorrect ? `true` : ``;
 
       answers += `\
         <div class="genre-answer">
           <div class="player-wrapper">
             <div class="player">
-              <audio data-id="${el.id}" src="${el.src}"></audio>
+              <audio data-id="${i}" src="${el.src}"></audio>
               <button class="player-control"></button>
               <div class="player-track">
                 <span class="player-status"></span>
               </div>
             </div>
           </div>
-          <input type="checkbox" name="answer" value="answer-${el.id}" id="a-${el.id}" data-right="${right}">
-          <label class="genre-answer-check" for="a-${el.id}"></label>
+          <input type="checkbox" name="answer" value="answer-${i}" id="a-${i}" data-right="${right}">
+          <label class="genre-answer-check" for="a-${i}"></label>
         </div>`;
     });
 
     return `\
       <div class="main-wrap" data-classes="main--level main--level-genre">
-        <h2 class="title">${this.data.title}</h2>
+        <h2 class="title">${this.data.question}</h2>
         <form class="genre" data-right-length="${this.data.correctLength}">
           ${answers}
           <button class="genre-answer-send" type="submit">Ответить</button>
