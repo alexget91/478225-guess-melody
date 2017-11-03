@@ -1,26 +1,32 @@
-import {gameSequence as gameSequenceInitial, gameAnswers, gameState} from '../data/game-data';
+import {gameSequence, gameAnswers, gameState} from '../data/game-data';
 import artistPresenter from '../presenters/artist-presenter';
 import genrePresenter from '../presenters/genre-presenter';
 import headerPresenter from '../presenters/header-presenter';
+import getDataResult from '../screen-data/get-data-result';
 import Application from '../application';
-
-let gameSequence;
+import ConvertData from '../data/convert-data';
 
 export default class GamePresenter {
 
-  static initialize(reset) {
-    if (reset) {
-      gameSequence = [...gameSequenceInitial];
+  static initialize(data) {
+    data = ConvertData.decode(data);
+
+    if (!data) {
       gameAnswers.length = 0;
       gameState.reset();
+      history.pushState(null, null, `#game`);
+    } else {
+      [gameState.currentLevel, gameState.notesLeft, gameState.timeLeft] = data;
     }
 
-    const question = gameSequence.shift();
+    if (gameState.currentLevel < gameSequence.length) {
+      const question = gameSequence[gameState.currentLevel++];
 
-    if (question) {
-
-      if (reset) {
+      if (!data || !headerPresenter.view) {
         headerPresenter.initialize(gameState.timeLeft, gameState.mistakesCount);
+        if (gameState.mistakesCount) {
+          headerPresenter.view.showMistakes();
+        }
       }
 
       this.timeStart = headerPresenter.view.timer.value;
@@ -32,7 +38,7 @@ export default class GamePresenter {
       }
 
     } else {
-      Application.showResult();
+      Application.showResult(getDataResult());
     }
   }
 
@@ -49,12 +55,12 @@ export default class GamePresenter {
     gameAnswers.push({isRight, time});
 
     if (!isRight) {
-      gameState.notesLeft -= 1;
+      gameState.notesLeft--;
     }
 
     if (!gameState.notesLeft) {
 
-      Application.showResult();
+      Application.showResult(getDataResult());
 
     } else {
 
@@ -62,7 +68,7 @@ export default class GamePresenter {
         headerPresenter.view.showMistakes();
       }
 
-      this.initialize();
+      Application.showGameScreen([gameState.currentLevel, gameState.notesLeft, gameState.timeLeft]);
     }
   }
 }

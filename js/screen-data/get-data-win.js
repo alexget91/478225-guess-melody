@@ -1,22 +1,15 @@
-import gameData, {gameAnswers} from '../data/game-data';
 import getNumEnding from '../data/get-num-ending';
-import getScore from '../data/get-score';
-import getMinutes from '../data/get-minutes';
 
-export default (gameResult, comparison) => {
-  const gameScore = getScore(gameAnswers);
-  const gameTime = getMinutes(gameData.GAME_TIME - gameResult.timeLeft);
-  const mistakes = gameData.NOTES_COUNT - gameResult.notesLeft;
-
+export default (data) => {
   return {
     title: `Вы настоящий меломан!`,
-    statistics: `За&nbsp;${gameTime.min}&nbsp;${getNumEnding(gameTime.min, [`минуту`, `минуты`, `минут`])} и\
-      ${gameTime.sec}&nbsp;${getNumEnding(gameTime.sec, [`секунду`, `секунды`, `секунд`])}
-      <br>вы&nbsp;набрали ${gameScore.score} ${getNumEnding(gameScore.score, [`балл`, `балла`, `баллов`])}\
-      (${gameScore.fastCount} ${getNumEnding(gameScore.fastCount, [`быстрый`, `быстрых`, `быстрых`])})
-      <br>совершив ${mistakes} ${getNumEnding(mistakes, [`ошибку`, `ошибки`, `ошибок`])}`,
-    comparison: `Вы заняли ${comparison.place}-е место из ${comparison.playersCount} игроков.\
-      Это&nbsp;лучше чем у&nbsp;${comparison.percent}%&nbsp;игроков`,
-    replay: `Сыграть ещё раз`
+    statistics: `За&nbsp;${data.min}&nbsp;${getNumEnding(data.min, [`минуту`, `минуты`, `минут`])} и\
+      ${data.sec}&nbsp;${getNumEnding(data.sec, [`секунду`, `секунды`, `секунд`])}
+      <br>вы&nbsp;набрали ${data.score} ${getNumEnding(data.score, [`балл`, `балла`, `баллов`])}\
+      (${data.fastCount} ${getNumEnding(data.fastCount, [`быстрый`, `быстрых`, `быстрых`])})
+      <br>совершив ${data.mistakes} ${getNumEnding(data.mistakes, [`ошибку`, `ошибки`, `ошибок`])}`,
+    comparison: `Вы заняли ${data.place}-е место из ${data.playersCount} игроков.\
+      Это&nbsp;лучше чем у&nbsp;${data.percent}%&nbsp;игроков`,
+    replay: `Сыграть ещё раз`,
   };
 };

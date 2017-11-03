@@ -1,27 +1,27 @@
-import gameData, {gameStatistics, gameState} from '../data/game-data';
 import headerPresenter from '../presenters/header-presenter';
-import getDataWin from '../screen-data/get-data-win';
-import getDataLose from '../screen-data/get-data-lose';
-import getComparison from '../data/get-comparison';
 import ResultView from '../views/result-view';
 import Application from '../application';
-
+import getDataLose from '../screen-data/get-data-lose';
+import getDataWin from '../screen-data/get-data-win';
+import ConvertData from '../data/convert-data';
 
 class ResultPresenter {
-  initialize() {
-    const gameResult = {
-      notesLeft: gameState.notesLeft,
-      timeLeft: gameState.timeLeft
-    };
-    const comparison = getComparison(gameStatistics, gameResult);
+  initialize(data) {
+    if (headerPresenter.view) {
+      headerPresenter.view.unbind();
+    }
+
+    const isWin = data.length > 2;
+    const dataDecode = {};
     let dataResult;
 
-    headerPresenter.view.unbind();
+    [dataDecode.min, dataDecode.sec, dataDecode.score, dataDecode.fastCount,
+      dataDecode.mistakes, dataDecode.place, dataDecode.playersCount, dataDecode.percent] = ConvertData.decode(data);
 
-    if (Object.values(gameData.ExitCode).indexOf(comparison) !== -1) {
-      dataResult = getDataLose(comparison);
+    if (isWin) {
+      dataResult = getDataWin(dataDecode);
     } else {
-      dataResult = getDataWin(gameResult, comparison);
+      dataResult = getDataLose(dataDecode);
     }
 
     this.view = new ResultView(dataResult);
