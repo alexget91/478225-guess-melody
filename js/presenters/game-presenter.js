@@ -1,4 +1,4 @@
-import {gameSequence, gameAnswers, gameState} from '../data/game-data';
+import {gameSequence, gameAnswers, gameState, QuestionType} from '../data/game-data';
 import artistPresenter from '../presenters/artist-presenter';
 import genrePresenter from '../presenters/genre-presenter';
 import headerPresenter from '../presenters/header-presenter';
@@ -30,8 +30,7 @@ export default class GamePresenter {
       }
 
       this.timeStart = headerPresenter.view.timer.value;
-
-      if (question.typeArtist) {
+      if (question.questionType === QuestionType.ARTIST) {
         artistPresenter.initialize(question);
       } else {
         genrePresenter.initialize(question);

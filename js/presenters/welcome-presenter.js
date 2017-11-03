@@ -1,6 +1,7 @@
 import WelcomeView from '../views/welcome-view';
 import dataWelcome from '../screen-data/data-welcome';
 import Application from '../application';
+import {gameSequence} from '../data/game-data';
 
 class WelcomePresenter {
   initialize() {

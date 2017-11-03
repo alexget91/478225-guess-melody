@@ -1,4 +1,5 @@
 import AbstractView from './abstract-view';
+import {gameMusic} from '../data/game-data';
 
 export default class ArtistView extends AbstractView {
   constructor(data) {
@@ -8,26 +9,25 @@ export default class ArtistView extends AbstractView {
   get template() {
     let answers = ``;
 
-    this.data.answers.forEach((el) => {
-      const right = el.right ? `true` : ``;
+    this.data.answers.forEach((el, i) => {
+      const right = el.isCorrect ? `true` : ``;
 
       answers += `\
         <div class="main-answer-wrapper">
-          <input class="main-answer-r" type="radio" id="answer-${el.id}" name="answer" value="val-${el.id}" data-right="${right}"/>
-          <label class="main-answer" for="answer-${el.id}">
-            <img class="main-answer-preview" src="${el.image}"
-                alt="${el.name}" width="134" height="134">
-            ${el.name}
+          <input class="main-answer-r" type="radio" id="answer-${i}" name="answer" value="val-${i}" data-right="${right}"/>
+          <label class="main-answer" for="answer-${i}">
+            <img class="main-answer-preview" src="${el.image.url}"
+                alt="${el.title}" width="${el.image.width}" height="${el.image.height}">
+            ${el.title}
           </label>
         </div>`;
     });
 
     return `\
       <div class="main-wrap" data-classes="main--level main--level-artist">
-        <h2 class="title main-title">${this.data.title}</h2>
+        <h2 class="title main-title">${this.data.question}</h2>
         <div class="player-wrapper">
           <div class="player">
-            <audio src="${this.data.melody.src}"></audio>
             <button class="player-control player-control--pause"></button>
             <div class="player-track">
               <span class="player-status"></span>
@@ -57,7 +57,8 @@ export default class ArtistView extends AbstractView {
     this.answers = this.element.querySelectorAll(`.main-answer`);
     this.player = this.element.querySelector(`.player`);
     this.playerControl = this.player.querySelector(`.player-control`);
-    this.audio = new Audio(this.player.querySelector(`audio`).getAttribute(`src`));
+    this.audio = gameMusic[this.data.src];
+    this.audio.currentTime = 0;
 
     this.audioToggle(true);
 

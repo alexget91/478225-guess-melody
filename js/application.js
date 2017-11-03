@@ -2,6 +2,10 @@ import welcomePresenter from './presenters/welcome-presenter';
 import GamePresenter from './presenters/game-presenter';
 import resultPresenter from './presenters/result-presenter';
 import ConvertData from './data/convert-data';
+import SplashScreen from './views/splash-screen';
+import Loader from './loader';
+import transformData from './data/transform-data';
+import preloadAudio from './data/preload-audio';
 
 const ControllerId = {
   WELCOME: ``,
@@ -9,14 +13,14 @@ const ControllerId = {
   RESULT: `result`
 };
 
-const routes = {
-  [ControllerId.WELCOME]: welcomePresenter,
-  [ControllerId.GAME]: GamePresenter,
-  [ControllerId.RESULT]: resultPresenter
-};
-
 export default class Application {
   static initialize() {
+    Application.routes = {
+      [ControllerId.WELCOME]: welcomePresenter,
+      [ControllerId.GAME]: GamePresenter,
+      [ControllerId.RESULT]: resultPresenter
+    };
+
     const hashChangeHandler = () => {
       const hashValue = location.hash.replace(`#`, ``);
       const [id, data] = hashValue.split(`?`);
@@ -28,7 +32,7 @@ export default class Application {
   }
 
   static changeHash(id, data) {
-    const controller = routes[id];
+    const controller = Application.routes[id];
 
     if (controller) {
       controller.initialize(data);
@@ -47,3 +51,11 @@ export default class Application {
     location.hash = `${ControllerId.RESULT}?${ConvertData.encode(state)}`;
   }
 }
+
+const splash = new SplashScreen();
+splash.show();
+
+Loader.loadData()
+    .then(transformData)
+    .then((links) => preloadAudio(links))
+    .catch(window.console.error);
