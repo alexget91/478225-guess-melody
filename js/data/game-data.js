@@ -32,26 +32,10 @@ export const gameSequence = [];
 // Массив загруженных мелодий
 export const gameMusic = {};
 
-// Статистика предыдущих игр
-export const gameStatistics = [
-  {
-    score: 7,
-    notesLeft: 4,
-    timeLeft: 20
-  },
-  {
-    score: 14,
-    notesLeft: 3,
-    timeLeft: 40
-  },
-  {
-    score: 2,
-    notesLeft: 4,
-    timeLeft: 20
-  }
-];
-
 // Массив ответов игрока
 export const gameAnswers = [];
+
+// Результат текущей игры
+export const gameResult = {};
 
 export default gameData;

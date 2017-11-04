@@ -1,4 +1,4 @@
-import {gameSequence, gameAnswers, gameState, QuestionType} from '../data/game-data';
+import gameData, {gameSequence, gameAnswers, gameState, QuestionType} from '../data/game-data';
 import artistPresenter from '../presenters/artist-presenter';
 import genrePresenter from '../presenters/genre-presenter';
 import headerPresenter from '../presenters/header-presenter';
@@ -14,7 +14,6 @@ export default class GamePresenter {
     if (!data) {
       gameAnswers.length = 0;
       gameState.reset();
-      history.pushState(null, null, `#game`);
     } else {
       [gameState.currentLevel, gameState.notesLeft, gameState.timeLeft] = data;
     }
@@ -59,7 +58,7 @@ export default class GamePresenter {
 
     if (!gameState.notesLeft) {
 
-      Application.showResult(getDataResult());
+      Application.showResult([gameData.ExitCode.NOTES_OVER]);
 
     } else {
 

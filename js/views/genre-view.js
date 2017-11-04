@@ -42,7 +42,8 @@ export default class GenreView extends AbstractView {
     const main = document.querySelector(`.main`);
     const mainWrap = main.querySelector(`.main-wrap`);
 
-    main.classList = `main ${classes}`;
+    main.setAttribute(`class`, `main ${classes}`);
+
     if (mainWrap) {
       main.replaceChild(this.element, mainWrap);
     } else {
