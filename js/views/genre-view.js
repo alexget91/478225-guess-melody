@@ -16,7 +16,7 @@ export default class GenreView extends AbstractView {
         <div class="genre-answer">
           <div class="player-wrapper">
             <div class="player">
-              <button class="player-control"></button>
+              <button class="player-control" data-id=${i}></button>
               <div class="player-track">
                 <span class="player-status"></span>
               </div>
@@ -98,7 +98,7 @@ export default class GenreView extends AbstractView {
 
   audioToggle(evt) {
     const audioButton = evt ? evt.target : null;
-    const evtId = evt ? audioButton.parentElement.querySelector(`audio`).dataset.id : null;
+    const evtId = evt ? audioButton.dataset.id : null;
     const playerPauseClass = `player-control--pause`;
     let play = evt ? this.playingID !== evtId : false;
 
