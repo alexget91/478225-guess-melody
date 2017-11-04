@@ -38,7 +38,7 @@ class HeaderPresenter {
 
         const time = getMinutes(timerValue);
         const timeRatio = timerValue / gameData.GAME_TIME;
-        const timerLineParameters = getRadius(timeRatio, 370);
+        const timerLineParameters = getRadius(timeRatio, gameData.TIME_CIRCLE_RADIUS);
 
         gameState.timeLeft = timerValue;
 

@@ -39,7 +39,7 @@ export default (data) => {
         break;
 
       default:
-        window.console.error(`${i}: Unknown question type '${data[el][`type`]}'`);
+        throw new Error(`${i}: Unknown question type '${data[el][`type`]}'`);
     }
   });
 

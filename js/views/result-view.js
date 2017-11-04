@@ -40,8 +40,10 @@ export default class ResultView extends AbstractView {
   showComparison(comparison) {
     const comparisonElement = this.element.querySelector(`.main-comparison`);
 
-    comparisonElement.innerHTML = `Вы заняли ${comparison.place}-е место из ${comparison.playersCount}\
-        ${getNumEnding(0, [`игрока`, `игроков`, `игроков`])}. Это&nbsp;лучше чем у&nbsp;${comparison.percent}%&nbsp;игроков`;
+    if (comparisonElement) {
+      comparisonElement.innerHTML = `Вы заняли ${comparison.place}-е место из ${comparison.playersCount}\
+          ${getNumEnding(0, [`игрока`, `игроков`, `игроков`])}. Это&nbsp;лучше чем у&nbsp;${comparison.percent}%&nbsp;игроков`;
+    }
   }
 
   onReplayClick() {

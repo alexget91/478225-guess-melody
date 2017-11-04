@@ -1,3 +1,3 @@
 export default (value) => {
-  return value.toString().length < 2 ? `0${value}` : `${value}`;
+  return value >= 0 && value < 10 ? `0${value}` : `${value}`;
 };
