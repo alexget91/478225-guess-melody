@@ -1,9 +1,12 @@
+import {gameResult} from '../data/game-data';
 import headerPresenter from '../presenters/header-presenter';
 import ResultView from '../views/result-view';
 import Application from '../application';
 import getDataLose from '../screen-data/get-data-lose';
 import getDataWin from '../screen-data/get-data-win';
 import ConvertData from '../data/convert-data';
+import getComparison from '../data/get-comparison';
+import Loader from '../loader';
 
 class ResultPresenter {
   initialize(data) {
@@ -17,8 +20,9 @@ class ResultPresenter {
     let dataResult;
 
     if (isWin) {
-      [dataDecode.min, dataDecode.sec, dataDecode.score, dataDecode.fastCount,
-        dataDecode.mistakes, dataDecode.place, dataDecode.playersCount, dataDecode.percent] = decodeArray;
+      /* [dataDecode.min, dataDecode.sec, dataDecode.score, dataDecode.fastCount,
+        dataDecode.mistakes, dataDecode.place, dataDecode.playersCount, dataDecode.percent] = decodeArray; */
+      [dataDecode.min, dataDecode.sec, dataDecode.score, dataDecode.fastCount, dataDecode.mistakes] = decodeArray;
 
       dataResult = getDataWin(dataDecode);
     } else {
@@ -35,6 +39,14 @@ class ResultPresenter {
     };
 
     view.show();
+
+    if (Object.keys(gameResult).length) {
+      Loader.saveResults(gameResult)
+          .then(() => Loader.loadResults())
+          .then((gameStatistics) => {
+            view.showComparison(getComparison(gameStatistics, gameResult));
+          });
+    }
   }
 }
 
