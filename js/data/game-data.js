@@ -3,7 +3,6 @@ import GameState from './game-state';
 const gameData = {
   GAME_TITLE: `Угадай мелодию`,
   GAME_TIME: 300,
-  QUESTIONS_COUNT: 10,
   FAST_ANSWER_TIME: 30,
   TIMER_BLINK_TIME: 30,
   NOTES_COUNT: 4,
@@ -21,64 +20,17 @@ const gameData = {
 // Параметры хедера
 export const gameState = new GameState(gameData.NOTES_COUNT, gameData.GAME_TIME);
 
+// Типы вопросов
+export const QuestionType = {
+  GENRE: `genre`,
+  ARTIST: `artist`
+};
+
 // Массив вопросов игры
-export const gameSequence = [
-  {
-    typeArtist: true, // Тип: выбор артиста
-    melodyID: 1, // ID проигрываемой мелодии (правильный ответ)
-    answers: new Set([1, 2, 3]) // ID мелодий из библиотеки
-  },
-  {
-    typeArtist: false, // Тип: выбор жанра
-    genre: `Rock`, // Оставил для наглядности, но можно брать из correctAnswer
-    correctAnswer: new Set([2, 4]), // ID мелодий из библиотеки
-    answers: new Set([1, 2, 3, 4]) // ID мелодий из библиотеки
-  },
-  {
-    typeArtist: true,
-    melodyID: 2,
-    answers: new Set([3, 2, 1])
-  },
-  {
-    typeArtist: false,
-    genre: `Rock`,
-    correctAnswer: new Set([2, 4]),
-    answers: new Set([1, 2, 3, 4])
-  },
-  {
-    typeArtist: true,
-    melodyID: 1,
-    answers: new Set([1, 2, 3])
-  },
-  {
-    typeArtist: false,
-    genre: `Rock`,
-    correctAnswer: new Set([2, 4]),
-    answers: new Set([1, 2, 3, 4])
-  },
-  {
-    typeArtist: true,
-    melodyID: 1,
-    answers: new Set([1, 2, 3])
-  },
-  {
-    typeArtist: false,
-    genre: `Rock`,
-    correctAnswer: new Set([2, 4]),
-    answers: new Set([1, 2, 3, 4])
-  },
-  {
-    typeArtist: true,
-    melodyID: 1,
-    answers: new Set([1, 2, 3])
-  },
-  {
-    typeArtist: false,
-    genre: `Rock`,
-    correctAnswer: new Set([2, 4]),
-    answers: new Set([1, 2, 3, 4])
-  }
-];
+export const gameSequence = [];
+
+// Массив загруженных мелодий
+export const gameMusic = {};
 
 // Статистика предыдущих игр
 export const gameStatistics = [
@@ -99,7 +51,7 @@ export const gameStatistics = [
   }
 ];
 
-// Массив ответов игрока (изначально пустой, формируется в процессе игры)
+// Массив ответов игрока
 export const gameAnswers = [];
 
 export default gameData;

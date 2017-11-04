@@ -12,16 +12,17 @@ class ResultPresenter {
     }
 
     const isWin = data.length > 2;
+    const decodeArray = ConvertData.decode(data);
     const dataDecode = {};
     let dataResult;
 
-    [dataDecode.min, dataDecode.sec, dataDecode.score, dataDecode.fastCount,
-      dataDecode.mistakes, dataDecode.place, dataDecode.playersCount, dataDecode.percent] = ConvertData.decode(data);
-
     if (isWin) {
+      [dataDecode.min, dataDecode.sec, dataDecode.score, dataDecode.fastCount,
+        dataDecode.mistakes, dataDecode.place, dataDecode.playersCount, dataDecode.percent] = decodeArray;
+
       dataResult = getDataWin(dataDecode);
     } else {
-      dataResult = getDataLose(dataDecode);
+      dataResult = getDataLose(decodeArray[0]);
     }
 
     this.view = new ResultView(dataResult);

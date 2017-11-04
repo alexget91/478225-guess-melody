@@ -1,4 +1,5 @@
 import AbstractView from './abstract-view';
+import {gameMusic} from '../data/game-data';
 
 export default class GenreView extends AbstractView {
   constructor(data) {
@@ -8,28 +9,27 @@ export default class GenreView extends AbstractView {
   get template() {
     let answers = ``;
 
-    this.data.answers.forEach((el) => {
-      const right = el.right ? `true` : ``;
+    this.data.answers.forEach((el, i) => {
+      const right = el.isCorrect ? `true` : ``;
 
       answers += `\
         <div class="genre-answer">
           <div class="player-wrapper">
             <div class="player">
-              <audio data-id="${el.id}" src="${el.src}"></audio>
-              <button class="player-control"></button>
+              <button class="player-control" data-id=${i}></button>
               <div class="player-track">
                 <span class="player-status"></span>
               </div>
             </div>
           </div>
-          <input type="checkbox" name="answer" value="answer-${el.id}" id="a-${el.id}" data-right="${right}">
-          <label class="genre-answer-check" for="a-${el.id}"></label>
+          <input type="checkbox" name="answer" value="answer-${i}" id="a-${i}" data-right="${right}">
+          <label class="genre-answer-check" for="a-${i}"></label>
         </div>`;
     });
 
     return `\
       <div class="main-wrap" data-classes="main--level main--level-genre">
-        <h2 class="title">${this.data.title}</h2>
+        <h2 class="title">${this.data.question}</h2>
         <form class="genre" data-right-length="${this.data.correctLength}">
           ${answers}
           <button class="genre-answer-send" type="submit">Ответить</button>
@@ -65,11 +65,13 @@ export default class GenreView extends AbstractView {
     this.players = {};
     this.userAnswer = {};
 
-    [].forEach.call(this.element.querySelectorAll(`.player`), (el) => {
-      const audio = el.querySelector(`audio`);
 
-      this.players[audio.dataset.id] = {
-        audio: new Audio(audio.getAttribute(`src`)),
+    [].forEach.call(this.element.querySelectorAll(`.player`), (el, i) => {
+      const audioObject = gameMusic[this.data.answers[i].src];
+      audioObject.currentTime = 0;
+
+      this.players[i] = {
+        audio: audioObject,
         control: el.querySelector(`.player-control`)
       };
     });
@@ -96,7 +98,7 @@ export default class GenreView extends AbstractView {
 
   audioToggle(evt) {
     const audioButton = evt ? evt.target : null;
-    const evtId = evt ? audioButton.parentElement.querySelector(`audio`).dataset.id : null;
+    const evtId = evt ? audioButton.dataset.id : null;
     const playerPauseClass = `player-control--pause`;
     let play = evt ? this.playingID !== evtId : false;
 

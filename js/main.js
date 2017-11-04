@@ -1,3 +1,1 @@
-import Application from './application';
-
-Application.initialize();
+import './application';
