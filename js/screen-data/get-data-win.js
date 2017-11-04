@@ -8,8 +8,7 @@ export default (data) => {
       <br>вы&nbsp;набрали ${data.score} ${getNumEnding(data.score, [`балл`, `балла`, `баллов`])}\
       (${data.fastCount} ${getNumEnding(data.fastCount, [`быстрый`, `быстрых`, `быстрых`])})
       <br>совершив ${data.mistakes} ${getNumEnding(data.mistakes, [`ошибку`, `ошибки`, `ошибок`])}`,
-    comparison: `Вы заняли ${data.place}-е место из ${data.playersCount} игроков.\
-      Это&nbsp;лучше чем у&nbsp;${data.percent}%&nbsp;игроков`,
+    comparison: `Загрузка статистики...`,
     replay: `Сыграть ещё раз`,
   };
 };

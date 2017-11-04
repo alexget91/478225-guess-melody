@@ -40,15 +40,15 @@ export default class Application {
   }
 
   static showWelcome() {
-    location.hash = ControllerId.WELCOME;
+    welcomePresenter.initialize();
   }
 
   static showGameScreen(state = ``) {
-    location.hash = `${ControllerId.GAME}?${ConvertData.encode(state)}`;
+    GamePresenter.initialize(ConvertData.encode(state));
   }
 
   static showResult(state) {
-    location.hash = `${ControllerId.RESULT}?${ConvertData.encode(state)}`;
+    resultPresenter.initialize(ConvertData.encode(state));
   }
 }
 
@@ -58,4 +58,5 @@ splash.show();
 Loader.loadData()
     .then(transformData)
     .then((links) => preloadAudio(links))
+    .then(() => Application.initialize())
     .catch(window.console.error);

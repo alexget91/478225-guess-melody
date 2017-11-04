@@ -1,3 +1,4 @@
+import getNumEnding from '../data/get-num-ending';
 import AbstractView from './abstract-view';
 import logo from '../views/logo';
 
@@ -34,6 +35,13 @@ export default class ResultView extends AbstractView {
 
   unbind() {
     this.replay.removeEventListener(`click`, this.onReplayClick);
+  }
+
+  showComparison(comparison) {
+    const comparisonElement = this.element.querySelector(`.main-comparison`);
+
+    comparisonElement.innerHTML = `Вы заняли ${comparison.place}-е место из ${comparison.playersCount}\
+        ${getNumEnding(0, [`игрока`, `игроков`, `игроков`])}. Это&nbsp;лучше чем у&nbsp;${comparison.percent}%&nbsp;игроков`;
   }
 
   onReplayClick() {

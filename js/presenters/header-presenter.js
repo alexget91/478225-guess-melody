@@ -6,7 +6,6 @@ import artistPresenter from './artist-presenter';
 import genrePresenter from './genre-presenter';
 import getRadius from '../data/get-radius';
 import getDataHeader from '../screen-data/get-data-header';
-import getDataResult from '../screen-data/get-data-result';
 import Application from '../application';
 
 class HeaderPresenter {
@@ -27,7 +26,7 @@ class HeaderPresenter {
           artistPresenter.view.audioToggle();
         }
 
-        Application.showResult(getDataResult());
+        Application.showResult([gameData.ExitCode.TIME_OVER]);
 
       } else {
 
