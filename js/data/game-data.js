@@ -6,6 +6,8 @@ const gameData = {
   FAST_ANSWER_TIME: 30,
   TIMER_BLINK_TIME: 30,
   NOTES_COUNT: 4,
+  TIMER_INTERVAL: 1000,
+  TIME_CIRCLE_RADIUS: 370,
   AnswerPrice: {
     CORRECT: 1,
     FAST: 2,

@@ -1,7 +1,7 @@
 import AbstractView from './abstract-view';
 import getTimer from '../data/get-timer';
 import getRadius from '../data/get-radius';
-import {gameState} from '../data/game-data';
+import gameData, {gameState} from '../data/game-data';
 import getElementFromTemplate from '../dom-helpers/get-element-from-template';
 
 export default class HeaderView extends AbstractView {
@@ -65,8 +65,8 @@ export default class HeaderView extends AbstractView {
     this.mistakes = this.element.querySelector(`.main-mistakes`);
 
     this.timerInit();
-    this.timerInterval = setInterval(this.onTimerTick, 1000);
-    this.timerLine.setAttribute(`stroke-dasharray`, getRadius(1, 370).stroke);
+    this.timerInterval = setInterval(this.onTimerTick, gameData.TIMER_INTERVAL);
+    this.timerLine.setAttribute(`stroke-dasharray`, getRadius(1, gameData.TIME_CIRCLE_RADIUS).stroke);
   }
 
   unbind() {

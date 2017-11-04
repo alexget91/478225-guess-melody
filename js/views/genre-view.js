@@ -7,31 +7,25 @@ export default class GenreView extends AbstractView {
   }
 
   get template() {
-    let answers = ``;
-
-    this.data.answers.forEach((el, i) => {
-      const right = el.isCorrect ? `true` : ``;
-
-      answers += `\
-        <div class="genre-answer">
-          <div class="player-wrapper">
-            <div class="player">
-              <button class="player-control" data-id=${i}></button>
-              <div class="player-track">
-                <span class="player-status"></span>
-              </div>
-            </div>
-          </div>
-          <input type="checkbox" name="answer" value="answer-${i}" id="a-${i}" data-right="${right}">
-          <label class="genre-answer-check" for="a-${i}"></label>
-        </div>`;
-    });
-
     return `\
       <div class="main-wrap" data-classes="main--level main--level-genre">
         <h2 class="title">${this.data.question}</h2>
         <form class="genre" data-right-length="${this.data.correctLength}">
-          ${answers}
+${this.data.answers.map((el, i) => {
+    return `\
+      <div class="genre-answer">
+        <div class="player-wrapper">
+          <div class="player">
+            <button class="player-control" data-id=${i}></button>
+            <div class="player-track">
+              <span class="player-status"></span>
+            </div>
+          </div>
+        </div>
+        <input type="checkbox" name="answer" value="answer-${i}" id="a-${i}" data-right="${el.isCorrect ? `true` : ``}">
+        <label class="genre-answer-check" for="a-${i}"></label>
+      </div>`;
+  }).join(``)}
           <button class="genre-answer-send" type="submit">Ответить</button>
         </form>
       </div>`;
@@ -79,13 +73,13 @@ export default class GenreView extends AbstractView {
 
     this.submitToggle(true);
     [].forEach.call(this.answers, (el) => el.addEventListener(`change`, this.onAnswerChange));
-    [].forEach.call(Object.values(this.players), (el) => el.control.addEventListener(`click`, this.onPlayerClick));
+    Object.values(this.players).forEach((el) => el.control.addEventListener(`click`, this.onPlayerClick));
     this.submitBtn.addEventListener(`click`, this.onSubmitClick);
   }
 
   unbind() {
     [].forEach.call(this.answers, (el) => el.removeEventListener(`change`, this.onAnswerChange));
-    [].forEach.call(Object.values(this.players), (el) => el.control.removeEventListener(`click`, this.onPlayerClick));
+    Object.values(this.players).forEach((el) => el.control.removeEventListener(`click`, this.onPlayerClick));
     this.submitBtn.removeEventListener(`click`, this.onSubmitClick);
   }
 

@@ -4,9 +4,9 @@ export default (statistics, result) => {
 
   let place;
 
-  for (let i = 0; i < statistics.length; i++) {
-    if (statistics[i].id === result.id) {
-      place = i + 1;
+  for (let [index, element] of statistics.entries()) {
+    if (element.id === result.id) {
+      place = index + 1;
       break;
     }
   }
