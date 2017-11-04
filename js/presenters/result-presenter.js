@@ -20,8 +20,6 @@ class ResultPresenter {
     let dataResult;
 
     if (isWin) {
-      /* [dataDecode.min, dataDecode.sec, dataDecode.score, dataDecode.fastCount,
-        dataDecode.mistakes, dataDecode.place, dataDecode.playersCount, dataDecode.percent] = decodeArray; */
       [dataDecode.min, dataDecode.sec, dataDecode.score, dataDecode.fastCount, dataDecode.mistakes] = decodeArray;
 
       dataResult = getDataWin(dataDecode);

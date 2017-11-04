@@ -40,15 +40,15 @@ export default class Application {
   }
 
   static showWelcome() {
-    location.hash = ControllerId.WELCOME;
+    welcomePresenter.initialize();
   }
 
   static showGameScreen(state = ``) {
-    location.hash = `${ControllerId.GAME}?${ConvertData.encode(state)}`;
+    GamePresenter.initialize(ConvertData.encode(state));
   }
 
   static showResult(state) {
-    location.hash = `${ControllerId.RESULT}?${ConvertData.encode(state)}`;
+    resultPresenter.initialize(ConvertData.encode(state));
   }
 }
 

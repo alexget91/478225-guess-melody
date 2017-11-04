@@ -14,7 +14,6 @@ export default class GamePresenter {
     if (!data) {
       gameAnswers.length = 0;
       gameState.reset();
-      history.pushState(null, null, `#game`);
     } else {
       [gameState.currentLevel, gameState.notesLeft, gameState.timeLeft] = data;
     }
