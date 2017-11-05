@@ -1,7 +1,7 @@
 import HeaderView from '../views/header-view';
 import getMinutes from '../data/get-minutes';
 import getFormattedTime from '../data/get-formatted-time';
-import gameData, {gameState} from '../data/game-data';
+import gameData, {gameState, QuestionType} from '../data/game-data';
 import artistPresenter from './artist-presenter';
 import genrePresenter from './genre-presenter';
 import getRadius from '../data/get-radius';
@@ -20,7 +20,7 @@ class HeaderPresenter {
       if (!view.timer) {
         view.unbind();
 
-        if (gameState.currentLevelIsGenre) {
+        if (gameState.currentLevelType === QuestionType.GENRE) {
           genrePresenter.view.audioToggle();
         } else {
           artistPresenter.view.audioToggle();

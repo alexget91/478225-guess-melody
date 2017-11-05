@@ -15,11 +15,11 @@ export default class GamePresenter {
       gameAnswers.length = 0;
       gameState.reset();
     } else {
-      [gameState.currentLevel, gameState.notesLeft, gameState.timeLeft] = data;
+      [gameState.currentLevelNumber, gameState.notesLeft, gameState.timeLeft] = data;
     }
 
-    if (gameState.currentLevel < gameSequence.length) {
-      const question = gameSequence[gameState.currentLevel++];
+    if (gameState.currentLevelNumber < gameSequence.length) {
+      const question = gameSequence[gameState.currentLevelNumber++];
 
       if (!data || !headerPresenter.view) {
         headerPresenter.initialize(gameState.timeLeft, gameState.mistakesCount);
@@ -66,7 +66,7 @@ export default class GamePresenter {
         headerPresenter.view.showMistakes();
       }
 
-      Application.showGameScreen([gameState.currentLevel, gameState.notesLeft, gameState.timeLeft]);
+      Application.showGameScreen([gameState.currentLevelNumber, gameState.notesLeft, gameState.timeLeft]);
     }
   }
 }

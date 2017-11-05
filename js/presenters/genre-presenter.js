@@ -1,10 +1,10 @@
-import {gameState} from '../data/game-data';
+import {gameState, QuestionType} from '../data/game-data';
 import GenreView from '../views/genre-view';
 import GamePresenter from '../presenters/game-presenter';
 
 class GenrePresenter {
   initialize(data) {
-    gameState.currentLevelIsGenre = true;
+    gameState.currentLevelType = QuestionType.GENRE;
 
     this.view = new GenreView(data);
 

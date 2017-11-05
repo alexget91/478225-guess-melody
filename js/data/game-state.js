@@ -4,8 +4,8 @@ export default class GameState {
   constructor(notesLeft, timeLeft) {
     this.notesLeft = notesLeft;
     this.timeLeft = timeLeft;
-    this.currentLevel = 0;
-    this.currentLevelIsGenre = false;
+    this.currentLevelNumber = 0;
+    this.currentLevelType = false;
   }
 
   get mistakesCount() {
@@ -15,7 +15,7 @@ export default class GameState {
   reset() {
     this.notesLeft = gameData.NOTES_COUNT;
     this.timeLeft = gameData.GAME_TIME;
-    this.currentLevel = 0;
-    this.currentLevelIsGenre = false;
+    this.currentLevelNumber = 0;
+    this.currentLevelType = false;
   }
 }
