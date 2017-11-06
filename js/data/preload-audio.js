@@ -1,15 +1,38 @@
 import {gameMusic} from './game-data';
-import checkAudioPreload from './check-audio-preload';
+import Application from '../application';
 
-export default (links) => {
-  links.forEach((el) => {
-    const audio = new Audio(el);
+const preloadAudio = (links) => {
+  const linksSize = links.size;
+  let audioPreloadCount = 0;
+  const linksValues = links.values();
 
-    audio.preload = `auto`;
-    audio.addEventListener(`canplaythrough`, () => {
-      checkAudioPreload(links.size);
-    });
-    audio.load();
-    gameMusic[el] = audio;
-  });
+  const loadAudioLink = () => {
+    const linkNext = linksValues.next();
+
+    if (!linkNext.done) {
+      const audio = new Audio(linkNext.value);
+      audio.preload = `none`;
+
+      audio.play()
+          .then(() => {
+            audio.pause();
+            links.delete(linkNext.value);
+
+            audioPreloadCount++;
+            console.log(`Загружено ${audioPreloadCount} из ${linksSize}`);
+            gameMusic[linkNext.value] = audio;
+
+            loadAudioLink();
+          })
+          .catch((error) => {
+            throw new Error(error);
+          });
+    } else {
+      Application.showWelcome();
+    }
+  };
+
+  loadAudioLink();
 };
+
+export default preloadAudio;
