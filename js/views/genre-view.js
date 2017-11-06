@@ -11,20 +11,20 @@ export default class GenreView extends AbstractView {
       <div class="main-wrap" data-classes="main--level main--level-genre">
         <h2 class="title">${this.data.question}</h2>
         <form class="genre" data-right-length="${this.data.correctLength}">
-${this.data.answers.map((el, i) => {
+  ${this.data.answers.map((el, i) => {
     return `\
-      <div class="genre-answer">
-        <div class="player-wrapper">
-          <div class="player">
-            <button class="player-control" data-id=${i}></button>
-            <div class="player-track">
-              <span class="player-status"></span>
+          <div class="genre-answer">
+            <div class="player-wrapper">
+              <div class="player">
+                <button class="player-control" data-id=${i}></button>
+                <div class="player-track">
+                  <span class="player-status"></span>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <input type="checkbox" name="answer" value="answer-${i}" id="a-${i}" data-right="${el.isCorrect ? `true` : ``}">
-        <label class="genre-answer-check" for="a-${i}"></label>
-      </div>`;
+            <input type="checkbox" name="answer" value="answer-${i}" id="a-${i}" data-right="${el.isCorrect ? `true` : ``}">
+            <label class="genre-answer-check" for="a-${i}"></label>
+          </div>`;
   }).join(``)}
           <button class="genre-answer-send" type="submit">Ответить</button>
         </form>

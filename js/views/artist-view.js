@@ -7,22 +7,6 @@ export default class ArtistView extends AbstractView {
   }
 
   get template() {
-    let answers = ``;
-
-    this.data.answers.forEach((el, i) => {
-      const right = el.isCorrect ? `true` : ``;
-
-      answers += `\
-        <div class="main-answer-wrapper">
-          <input class="main-answer-r" type="radio" id="answer-${i}" name="answer" value="val-${i}" data-right="${right}"/>
-          <label class="main-answer" for="answer-${i}">
-            <img class="main-answer-preview" src="${el.image.url}"
-                alt="${el.title}" width="${el.image.width}" height="${el.image.height}">
-            ${el.title}
-          </label>
-        </div>`;
-    });
-
     return `\
       <div class="main-wrap" data-classes="main--level main--level-artist">
         <h2 class="title main-title">${this.data.question}</h2>
@@ -35,7 +19,17 @@ export default class ArtistView extends AbstractView {
           </div>
         </div>
         <form class="main-list">
-          ${answers}
+  ${this.data.answers.map((el, i) => {
+    return `\
+          <div class="main-answer-wrapper">
+            <input class="main-answer-r" type="radio" id="answer-${i}" name="answer" value="val-${i}" data-right="${el.isCorrect ? `true` : ``}"/>
+            <label class="main-answer" for="answer-${i}">
+              <img class="main-answer-preview" src="${el.image.url}"
+                  alt="${el.title}" width="${el.image.width}" height="${el.image.height}">
+              ${el.title}
+            </label>
+          </div>`;
+  }).join(``)}
         </form>
       </div>`;
   }
