@@ -3,36 +3,42 @@ import Application from '../application';
 
 const preloadAudio = (links) => {
   const linksSize = links.size;
-  let audioPreloadCount = 0;
   const linksValues = links.values();
+  let audioPreloadCount = 0;
+  const loadAudioLinks = [];
 
   const loadAudioLink = () => {
     const linkNext = linksValues.next();
 
     if (!linkNext.done) {
-      const audio = new Audio(linkNext.value);
-      audio.preload = `none`;
+      const loadPromise = new Promise((resolve) => {
+        const audio = new Audio();
+        audio.addEventListener(`canplaythrough`, () => resolve(audio));
+        audio.src = linkNext.value;
+        audio.load();
+      });
 
-      audio.play()
-          .then(() => {
-            audio.pause();
-            links.delete(linkNext.value);
+      loadPromise.then((audio) => {
+        audioPreloadCount++;
+        console.log(`Загружено ${audioPreloadCount} из ${linksSize}`);
+        gameMusic[linkNext.value] = audio;
+      });
 
-            audioPreloadCount++;
-            console.log(`Загружено ${audioPreloadCount} из ${linksSize}`);
-            gameMusic[linkNext.value] = audio;
+      loadAudioLinks.push(loadPromise);
 
-            loadAudioLink();
-          })
-          .catch((error) => {
-            throw new Error(error);
-          });
-    } else {
-      Application.showWelcome();
+      loadAudioLink();
     }
   };
 
   loadAudioLink();
+
+  Promise.all(loadAudioLinks)
+      .then(() => {
+        Application.showWelcome();
+      })
+      .catch((error) => {
+        throw new Error(error);
+      });
 };
 
 export default preloadAudio;
