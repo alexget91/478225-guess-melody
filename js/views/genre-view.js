@@ -51,7 +51,7 @@ export default class GenreView extends AbstractView {
 
   get players() {
     if (!this._players) {
-      this._players = [].map.call(this.element.querySelectorAll(`.player`), (el, i) => {
+      this._players = Array.from(this.element.querySelectorAll(`.player`)).map((el, i) => {
         const audioObject = gameMusic[this.data.answers[i].src];
         audioObject.currentTime = 0;
 
@@ -76,13 +76,13 @@ export default class GenreView extends AbstractView {
     this.userAnswer = {};
 
     this.submitToggle(true);
-    [].forEach.call(this.answers, (el) => el.addEventListener(`change`, this.onAnswerChange));
+    this.answers.forEach((el) => el.addEventListener(`change`, this.onAnswerChange));
     Object.values(this.players).forEach((el) => el.control.addEventListener(`click`, this.onPlayerClick));
     this.submitBtn.addEventListener(`click`, this.onSubmitClick);
   }
 
   unbind() {
-    [].forEach.call(this.answers, (el) => el.removeEventListener(`change`, this.onAnswerChange));
+    this.answers.forEach((el) => el.removeEventListener(`change`, this.onAnswerChange));
     Object.values(this.players).forEach((el) => el.control.removeEventListener(`click`, this.onPlayerClick));
     this.submitBtn.removeEventListener(`click`, this.onSubmitClick);
   }

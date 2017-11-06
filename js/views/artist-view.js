@@ -57,12 +57,12 @@ export default class ArtistView extends AbstractView {
 
     this.audioToggle(true);
 
-    [].forEach.call(this.answers, (el) => el.addEventListener(`click`, this.onAnswerClick));
+    this.answers.forEach((el) => el.addEventListener(`click`, this.onAnswerClick));
     this.playerControl.addEventListener(`click`, this.onPlayerClick);
   }
 
   unbind() {
-    [].forEach.call(this.answers, (el) => el.removeEventListener(`click`, this.onAnswerClick));
+    this.answers.forEach((el) => el.removeEventListener(`click`, this.onAnswerClick));
     this.playerControl.removeEventListener(`click`, this.onPlayerClick);
   }
 
