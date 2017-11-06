@@ -19,7 +19,7 @@ class GenrePresenter {
     view.onSubmitClick = (evt) => {
       evt.preventDefault();
 
-      GamePresenter.onAnswerSubmit(view, view.checkAnswer(userAnswerValues));
+      GamePresenter.onAnswerSubmit(view, this.checkAnswer(userAnswerValues));
     };
 
     view.onAnswerChange = (evt) => {
@@ -39,6 +39,10 @@ class GenrePresenter {
     };
 
     view.show();
+  }
+
+  checkAnswer(userAnswerValues) {
+    return userAnswerValues.length === this.rightAnswerLength && userAnswerValues.every((it) => it);
   }
 }
 

@@ -110,10 +110,6 @@ export default class GenreView extends AbstractView {
     }
   }
 
-  checkAnswer(userAnswerValues) {
-    return userAnswerValues.length === this.rightAnswerLength && userAnswerValues.reduce((result, it) => result && Boolean(it), true);
-  }
-
   onPlayerClick() {
     throw new Error(`Not implemented`);
   }
