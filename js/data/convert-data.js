@@ -3,16 +3,7 @@ import getFormattedTime from './get-formatted-time';
 export default class ConvertData {
 
   static encode(state) {
-    let code = ``;
-
-    if (state) {
-      code = Object.values(state).reduce((result, it) => {
-        result += getFormattedTime(it);
-        return result;
-      }, ``);
-    }
-
-    return code;
+    return state ? Object.values(state).reduce((result, it) => `${result}${getFormattedTime(it)}`, ``) : ``;
   }
 
   static decode(data) {
