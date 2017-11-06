@@ -40,6 +40,12 @@ export default class HeaderView extends AbstractView {
     return this._mistakeElement;
   }
 
+  setTimerValues(min, sec, lineDashoffset) {
+    this.headerMin.textContent = min;
+    this.headerSec.textContent = sec;
+    this.timerLine.setAttribute(`stroke-dashoffset`, lineDashoffset);
+  }
+
   show() {
     const main = document.querySelector(`.main`);
 

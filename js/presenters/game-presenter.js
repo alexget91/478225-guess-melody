@@ -9,34 +9,40 @@ import ConvertData from '../data/convert-data';
 export default class GamePresenter {
 
   static initialize(data) {
-    data = ConvertData.decode(data);
+    const convertedData = this.loadData(data);
 
-    if (!data) {
-      gameAnswers.length = 0;
-      gameState.reset();
-    } else {
-      [gameState.currentLevel, gameState.notesLeft, gameState.timeLeft] = data;
-    }
+    if (gameState.currentLevelNumber < gameSequence.length) {
 
-    if (gameState.currentLevel < gameSequence.length) {
-      const question = gameSequence[gameState.currentLevel++];
-
-      if (!data || !headerPresenter.view) {
+      if (!convertedData || !headerPresenter.view) {
         headerPresenter.initialize(gameState.timeLeft, gameState.mistakesCount);
-        if (gameState.mistakesCount) {
-          headerPresenter.view.showMistakes();
-        }
       }
-
-      this.timeStart = headerPresenter.view.timer.value;
-      if (question.questionType === QuestionType.ARTIST) {
-        artistPresenter.initialize(question);
-      } else {
-        genrePresenter.initialize(question);
-      }
+      this.initializeGameScreen(gameSequence[gameState.currentLevelNumber++]);
 
     } else {
       Application.showResult(getDataResult());
+    }
+  }
+
+  static loadData(data) {
+    data = ConvertData.decode(data);
+
+    if (data) {
+      [gameState.currentLevelNumber, gameState.notesLeft, gameState.timeLeft] = data;
+    } else {
+      gameAnswers.length = 0;
+      gameState.reset();
+    }
+
+    return data;
+  }
+
+  static initializeGameScreen(question) {
+    this.timeStart = headerPresenter.view.timer.value;
+
+    if (question.questionType === QuestionType.ARTIST) {
+      artistPresenter.initialize(question);
+    } else {
+      genrePresenter.initialize(question);
     }
   }
 
@@ -56,17 +62,14 @@ export default class GamePresenter {
       gameState.notesLeft--;
     }
 
-    if (!gameState.notesLeft) {
-
-      Application.showResult([gameData.ExitCode.NOTES_OVER]);
-
-    } else {
-
+    if (gameState.notesLeft) {
       if (!isRight) {
         headerPresenter.view.showMistakes();
       }
+      Application.showGameScreen([gameState.currentLevelNumber, gameState.notesLeft, gameState.timeLeft]);
 
-      Application.showGameScreen([gameState.currentLevel, gameState.notesLeft, gameState.timeLeft]);
+    } else {
+      Application.showResult([gameData.ExitCode.NOTES_OVER]);
     }
   }
 }

@@ -1,44 +1,42 @@
-import {gameState} from '../data/game-data';
+import {gameState, QuestionType} from '../data/game-data';
 import GenreView from '../views/genre-view';
 import GamePresenter from '../presenters/game-presenter';
 
 class GenrePresenter {
   initialize(data) {
-    gameState.currentLevelIsGenre = true;
-
+    gameState.currentLevelType = QuestionType.GENRE;
     this.view = new GenreView(data);
+    this.bindEvents();
+    this.view.show();
+  }
 
+  bindEvents() {
     const view = this.view;
-    let userAnswerValues;
+    view.onPlayerClick = (evt) => this.onGenrePlayerClick(evt);
+    view.onSubmitClick = (evt) => this.onGenreSubmitClick(evt);
+    view.onAnswerChange = (evt) => this.onGenreAnswerChange(evt);
+  }
 
-    view.onPlayerClick = (evt) => {
-      evt.preventDefault();
-      view.audioToggle(evt);
-    };
+  checkAnswer(userAnswerValues) {
+    return userAnswerValues.length === this.view.rightAnswerLength && userAnswerValues.every((it) => it);
+  }
 
-    view.onSubmitClick = (evt) => {
-      evt.preventDefault();
+  onGenrePlayerClick(evt) {
+    evt.preventDefault();
+    this.view.audioToggle(evt);
+  }
 
-      GamePresenter.onAnswerSubmit(view, view.checkAnswer(userAnswerValues));
-    };
+  onGenreSubmitClick(evt) {
+    evt.preventDefault();
+    GamePresenter.onAnswerSubmit(this.view, this.checkAnswer(this.userAnswerValues));
+  }
 
-    view.onAnswerChange = (evt) => {
-      const answerCheckbox = evt.target;
-      const answerID = view.getAnswerID(answerCheckbox);
-      const userAnswer = view.userAnswer;
+  onGenreAnswerChange(evt) {
+    const view = this.view;
 
-      if (answerCheckbox.checked) {
-        userAnswer[answerID] = answerCheckbox.dataset.right;
-      } else {
-        delete userAnswer[answerID];
-      }
-
-      userAnswerValues = Object.values(userAnswer);
-
-      view.submitToggle(!userAnswerValues.length);
-    };
-
-    view.show();
+    view.getUserAnswer(evt);
+    this.userAnswerValues = Object.values(view.userAnswer);
+    view.submitToggle(!this.userAnswerValues.length);
   }
 }
 

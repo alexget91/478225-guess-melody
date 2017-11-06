@@ -1,17 +1,17 @@
-import {gameState} from '../data/game-data';
+import {gameState, QuestionType} from '../data/game-data';
 import ArtistView from '../views/artist-view';
 import GamePresenter from '../presenters/game-presenter';
 
 class ArtistPresenter {
   initialize(data) {
-    gameState.currentLevelIsGenre = false;
+    gameState.currentLevelType = QuestionType.ARTIST;
 
     this.view = new ArtistView(data);
 
     const view = this.view;
 
     view.onAnswerClick = (evt) => {
-      GamePresenter.onAnswerSubmit(view, view.checkAnswer(evt.target));
+      GamePresenter.onAnswerSubmit(view, view.checkAnswer(evt));
     };
 
     view.onPlayerClick = (evt) => {

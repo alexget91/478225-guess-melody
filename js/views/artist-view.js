@@ -7,22 +7,6 @@ export default class ArtistView extends AbstractView {
   }
 
   get template() {
-    let answers = ``;
-
-    this.data.answers.forEach((el, i) => {
-      const right = el.isCorrect ? `true` : ``;
-
-      answers += `\
-        <div class="main-answer-wrapper">
-          <input class="main-answer-r" type="radio" id="answer-${i}" name="answer" value="val-${i}" data-right="${right}"/>
-          <label class="main-answer" for="answer-${i}">
-            <img class="main-answer-preview" src="${el.image.url}"
-                alt="${el.title}" width="${el.image.width}" height="${el.image.height}">
-            ${el.title}
-          </label>
-        </div>`;
-    });
-
     return `\
       <div class="main-wrap" data-classes="main--level main--level-artist">
         <h2 class="title main-title">${this.data.question}</h2>
@@ -35,7 +19,17 @@ export default class ArtistView extends AbstractView {
           </div>
         </div>
         <form class="main-list">
-          ${answers}
+  ${this.data.answers.map((el, i) => {
+    return `\
+          <div class="main-answer-wrapper">
+            <input class="main-answer-r" type="radio" id="answer-${i}" name="answer" value="val-${i}" data-right="${el.isCorrect ? `true` : ``}"/>
+            <label class="main-answer" for="answer-${i}">
+              <img class="main-answer-preview" src="${el.image.url}"
+                  alt="${el.title}" width="${el.image.width}" height="${el.image.height}">
+              ${el.title}
+            </label>
+          </div>`;
+  }).join(``)}
         </form>
       </div>`;
   }
@@ -63,20 +57,24 @@ export default class ArtistView extends AbstractView {
 
     this.audioToggle(true);
 
-    [].forEach.call(this.answers, (el) => el.addEventListener(`click`, this.onAnswerClick));
+    this.answers.forEach((el) => el.addEventListener(`click`, this.onAnswerClick));
     this.playerControl.addEventListener(`click`, this.onPlayerClick);
   }
 
   unbind() {
-    [].forEach.call(this.answers, (el) => el.removeEventListener(`click`, this.onAnswerClick));
+    this.answers.forEach((el) => el.removeEventListener(`click`, this.onAnswerClick));
     this.playerControl.removeEventListener(`click`, this.onPlayerClick);
   }
 
   audioToggle(play) {
-    if (!play || !this.audio.paused) {
-      this.audio.pause();
+    if ((!play || !this.audio.paused) && typeof this.playPromise !== `undefined`) {
+      this.playPromise
+          .then(() => this.audio.pause())
+          .catch((error) => {
+            throw new Error(error);
+          });
     } else {
-      this.audio.play();
+      this.playPromise = this.audio.play();
     }
   }
 
@@ -91,7 +89,8 @@ export default class ArtistView extends AbstractView {
     }
   }
 
-  checkAnswer(evtTarget) {
+  checkAnswer(evt) {
+    const evtTarget = evt.target;
     const answerLabel = evtTarget.classList.contains(`main-answer-preview`) ? evtTarget.parentElement : evtTarget;
 
     return Boolean(document.querySelector(`#${answerLabel.getAttribute(`for`)}`).dataset.right);

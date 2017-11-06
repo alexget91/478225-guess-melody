@@ -5,15 +5,17 @@ export default (answers) => {
   let fastCount = 0;
 
   const score = answers.reduce((result, el) => {
-    if (el.isRight) {
-      if (el.time < gameData.FAST_ANSWER_TIME) {
-        fastCount++;
-        return result + gameData.AnswerPrice.FAST;
-      } else {
-        return result + gameData.AnswerPrice.CORRECT;
-      }
+    if (!el.isRight) {
+      return result + gameData.AnswerPrice.WRONG;
     }
-    return result + gameData.AnswerPrice.WRONG;
+
+    if (el.time < gameData.FAST_ANSWER_TIME) {
+      fastCount++;
+      return result + gameData.AnswerPrice.FAST;
+    }
+
+    return result + gameData.AnswerPrice.CORRECT;
+
   }, 0);
 
   return {score, fastCount};

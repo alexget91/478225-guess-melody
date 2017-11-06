@@ -11,20 +11,20 @@ export default class GenreView extends AbstractView {
       <div class="main-wrap" data-classes="main--level main--level-genre">
         <h2 class="title">${this.data.question}</h2>
         <form class="genre" data-right-length="${this.data.correctLength}">
-${this.data.answers.map((el, i) => {
+  ${this.data.answers.map((el, i) => {
     return `\
-      <div class="genre-answer">
-        <div class="player-wrapper">
-          <div class="player">
-            <button class="player-control" data-id=${i}></button>
-            <div class="player-track">
-              <span class="player-status"></span>
+          <div class="genre-answer">
+            <div class="player-wrapper">
+              <div class="player">
+                <button class="player-control" data-id=${i}></button>
+                <div class="player-track">
+                  <span class="player-status"></span>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        <input type="checkbox" name="answer" value="answer-${i}" id="a-${i}" data-right="${el.isCorrect ? `true` : ``}">
-        <label class="genre-answer-check" for="a-${i}"></label>
-      </div>`;
+            <input type="checkbox" name="answer" value="answer-${i}" id="a-${i}" data-right="${el.isCorrect ? `true` : ``}">
+            <label class="genre-answer-check" for="a-${i}"></label>
+          </div>`;
   }).join(``)}
           <button class="genre-answer-send" type="submit">Ответить</button>
         </form>
@@ -49,36 +49,51 @@ ${this.data.answers.map((el, i) => {
     return parseInt(this.element.querySelector(`.genre`).dataset.rightLength, 10);
   }
 
+  get players() {
+    if (!this._players) {
+      this._players = Array.from(this.element.querySelectorAll(`.player`)).map((el, i) => {
+        const audioObject = gameMusic[this.data.answers[i].src];
+        audioObject.currentTime = 0;
+
+        return {
+          audio: audioObject,
+          control: el.querySelector(`.player-control`)
+        };
+      });
+    }
+
+    return this._players;
+  }
+
   getAnswerID(answerCheckbox) {
     return answerCheckbox.getAttribute(`id`);
+  }
+
+  getUserAnswer(evt) {
+    const answerCheckbox = evt.target;
+    const answerID = this.getAnswerID(answerCheckbox);
+
+    if (answerCheckbox.checked) {
+      this.userAnswer[answerID] = answerCheckbox.dataset.right;
+    } else {
+      delete this.userAnswer[answerID];
+    }
   }
 
   bind() {
     this.submitBtn = this.element.querySelector(`.genre-answer-send`);
     this.answers = this.element.querySelectorAll(`.genre-answer input[name="answer"]`);
     this.playingID = null;
-    this.players = {};
     this.userAnswer = {};
 
-
-    [].forEach.call(this.element.querySelectorAll(`.player`), (el, i) => {
-      const audioObject = gameMusic[this.data.answers[i].src];
-      audioObject.currentTime = 0;
-
-      this.players[i] = {
-        audio: audioObject,
-        control: el.querySelector(`.player-control`)
-      };
-    });
-
     this.submitToggle(true);
-    [].forEach.call(this.answers, (el) => el.addEventListener(`change`, this.onAnswerChange));
+    this.answers.forEach((el) => el.addEventListener(`change`, this.onAnswerChange));
     Object.values(this.players).forEach((el) => el.control.addEventListener(`click`, this.onPlayerClick));
     this.submitBtn.addEventListener(`click`, this.onSubmitClick);
   }
 
   unbind() {
-    [].forEach.call(this.answers, (el) => el.removeEventListener(`change`, this.onAnswerChange));
+    this.answers.forEach((el) => el.removeEventListener(`change`, this.onAnswerChange));
     Object.values(this.players).forEach((el) => el.control.removeEventListener(`click`, this.onPlayerClick));
     this.submitBtn.removeEventListener(`click`, this.onSubmitClick);
   }
@@ -108,10 +123,6 @@ ${this.data.answers.map((el, i) => {
       this.playingID = evtId;
       this.players[this.playingID].audio.play();
     }
-  }
-
-  checkAnswer(userAnswerValues) {
-    return userAnswerValues.length === this.rightAnswerLength && userAnswerValues.reduce((result, it) => result && Boolean(it), true);
   }
 
   onPlayerClick() {
