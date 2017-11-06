@@ -18,37 +18,42 @@ class HeaderPresenter {
       view.timerTick();
 
       if (!view.timer) {
-        view.unbind();
-
-        if (gameState.currentLevelType === QuestionType.GENRE) {
-          genrePresenter.view.audioToggle();
-        } else {
-          artistPresenter.view.audioToggle();
-        }
-
-        Application.showResult([gameData.ExitCode.TIME_OVER]);
-
+        this.stopGame();
       } else {
-
-        const timerValue = view.timer.value;
-
-        if (timerValue < gameData.TIMER_BLINK_TIME) {
-          view.timerBlink();
-        }
-
-        const time = getMinutes(timerValue);
-        const timeRatio = timerValue / gameData.GAME_TIME;
-        const timerLineParameters = getRadius(timeRatio, gameData.TIME_CIRCLE_RADIUS);
-
-        gameState.timeLeft = timerValue;
-
-        view.headerMin.textContent = getFormattedTime(time.min);
-        view.headerSec.textContent = getFormattedTime(time.sec);
-        view.timerLine.setAttribute(`stroke-dashoffset`, timerLineParameters.offset);
+        this.changeTimerParameters();
       }
     };
 
     view.show();
+  }
+
+  stopGame() {
+    this.view.unbind();
+
+    if (gameState.currentLevelType === QuestionType.GENRE) {
+      genrePresenter.view.audioToggle();
+    } else {
+      artistPresenter.view.audioToggle();
+    }
+
+    Application.showResult([gameData.ExitCode.TIME_OVER]);
+  }
+
+  changeTimerParameters() {
+    const view = this.view;
+    const timerValue = view.timer.value;
+
+    if (timerValue < gameData.TIMER_BLINK_TIME) {
+      view.timerBlink();
+    }
+
+    const time = getMinutes(timerValue);
+    const timeRatio = timerValue / gameData.GAME_TIME;
+    const timerLineParameters = getRadius(timeRatio, gameData.TIME_CIRCLE_RADIUS);
+
+    gameState.timeLeft = timerValue;
+
+    view.setTimerValues(getFormattedTime(time.min), getFormattedTime(time.sec), timerLineParameters.offset);
   }
 }
 

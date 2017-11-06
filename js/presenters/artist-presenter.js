@@ -11,7 +11,7 @@ class ArtistPresenter {
     const view = this.view;
 
     view.onAnswerClick = (evt) => {
-      GamePresenter.onAnswerSubmit(view, view.checkAnswer(evt.target));
+      GamePresenter.onAnswerSubmit(view, view.checkAnswer(evt));
     };
 
     view.onPlayerClick = (evt) => {

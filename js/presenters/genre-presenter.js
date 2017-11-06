@@ -33,18 +33,9 @@ class GenrePresenter {
 
   onGenreAnswerChange(evt) {
     const view = this.view;
-    const answerCheckbox = evt.target;
-    const answerID = view.getAnswerID(answerCheckbox);
-    const userAnswer = view.userAnswer;
 
-    if (answerCheckbox.checked) {
-      userAnswer[answerID] = answerCheckbox.dataset.right;
-    } else {
-      delete userAnswer[answerID];
-    }
-
-    this.userAnswerValues = Object.values(userAnswer);
-
+    view.getUserAnswer(evt);
+    this.userAnswerValues = Object.values(view.userAnswer);
     view.submitToggle(!this.userAnswerValues.length);
   }
 }

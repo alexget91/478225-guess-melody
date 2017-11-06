@@ -69,6 +69,17 @@ export default class GenreView extends AbstractView {
     return answerCheckbox.getAttribute(`id`);
   }
 
+  getUserAnswer(evt) {
+    const answerCheckbox = evt.target;
+    const answerID = this.getAnswerID(answerCheckbox);
+
+    if (answerCheckbox.checked) {
+      this.userAnswer[answerID] = answerCheckbox.dataset.right;
+    } else {
+      delete this.userAnswer[answerID];
+    }
+  }
+
   bind() {
     this.submitBtn = this.element.querySelector(`.genre-answer-send`);
     this.answers = this.element.querySelectorAll(`.genre-answer input[name="answer"]`);
