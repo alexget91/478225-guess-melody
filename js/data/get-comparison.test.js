@@ -4,7 +4,7 @@ import getComparison from './get-comparison';
 let statistics;
 let result;
 
-describe(`Show player score`, () => {
+describe(`Get comparison`, () => {
   beforeEach(() => {
     statistics = [
       {
@@ -40,28 +40,28 @@ describe(`Show player score`, () => {
     };
   });
 
-  it(`should return correct message when player wins (2nd place out of 4)`, () => {
+  it(`should return correct statistics when player wins (2nd place out of 4)`, () => {
     assert.deepEqual({place: 2, playersCount: 4, percent: 50}, getComparison(statistics, result));
   });
 
-  it(`should return correct message when player wins (2nd place out of 3)`, () => {
+  it(`should return correct statistics when player wins (2nd place out of 3)`, () => {
     statistics.splice(2, 1);
     assert.deepEqual({place: 2, playersCount: 3, percent: 33}, getComparison(statistics, result));
   });
 
-  it(`should return correct message when player wins (1st position in statistics)`, () => {
+  it(`should return correct statistics when player wins (1st position in statistics)`, () => {
     statistics[3].score = 20;
     result.score = 20;
     assert.deepEqual({place: 1, playersCount: 4, percent: 75}, getComparison(statistics, result));
   });
 
-  it(`should return correct message when player wins (last position in statistics)`, () => {
+  it(`should return correct statistics when player wins (last position in statistics)`, () => {
     statistics[3].score = 1;
     result.score = 1;
     assert.deepEqual({place: 4, playersCount: 4, percent: 0}, getComparison(statistics, result));
   });
 
-  it(`should return correct message when player wins (statistics is empty)`, () => {
+  it(`should return correct statistics when player wins (statistics is empty)`, () => {
     statistics = [result];
     assert.deepEqual({place: 1, playersCount: 1, percent: 0}, getComparison(statistics, result));
   });
