@@ -1,5 +1,10 @@
 import {gameMusic} from './game-data';
+import splashScreen from '../views/splash-screen';
 import Application from '../application';
+
+/**
+ * Может работать нестабильно из-за проблем с хостингом и при медленной загрузке с freemusicarchive.org
+ */
 
 const preloadAudio = (links) => {
   const linksSize = links.size;
@@ -20,7 +25,7 @@ const preloadAudio = (links) => {
 
       loadPromise.then((audio) => {
         audioPreloadCount++;
-        console.log(`Загружено ${audioPreloadCount} из ${linksSize}`);
+        splashScreen.showProgress(Math.round(audioPreloadCount / linksSize * 100));
         gameMusic[linkNext.value] = audio;
       });
 
@@ -42,10 +47,3 @@ const preloadAudio = (links) => {
 };
 
 export default preloadAudio;
-
-/* export default (links) => {
-  links.forEach((el) => {
-    const audio = new Audio(el);
-    gameMusic[el] = audio;
-  });
-}; */

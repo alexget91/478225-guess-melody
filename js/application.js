@@ -2,7 +2,7 @@ import welcomePresenter from './presenters/welcome-presenter';
 import GamePresenter from './presenters/game-presenter';
 import resultPresenter from './presenters/result-presenter';
 import ConvertData from './data/convert-data';
-import SplashScreen from './views/splash-screen';
+import splashScreen from './views/splash-screen';
 import Loader from './loader';
 import transformData from './data/transform-data';
 import preloadAudio from './data/preload-audio';
@@ -21,11 +21,9 @@ export default class Application {
   }
 }
 
-const splash = new SplashScreen();
-splash.show();
+splashScreen.show();
 
 Loader.loadData()
     .then(transformData)
     .then((links) => preloadAudio(links))
-    // .then(() => Application.showWelcome())
     .catch(window.console.error);
