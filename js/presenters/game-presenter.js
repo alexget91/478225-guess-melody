@@ -9,6 +9,21 @@ import ConvertData from '../data/convert-data';
 export default class GamePresenter {
 
   static initialize(data) {
+    const convertedData = this.loadData(data);
+
+    if (gameState.currentLevelNumber < gameSequence.length) {
+
+      if (!convertedData || !headerPresenter.view) {
+        headerPresenter.initialize(gameState.timeLeft, gameState.mistakesCount);
+      }
+      this.initializeGameScreen(gameSequence[gameState.currentLevelNumber++]);
+
+    } else {
+      Application.showResult(getDataResult());
+    }
+  }
+
+  static loadData(data) {
     data = ConvertData.decode(data);
 
     if (data) {
@@ -18,25 +33,16 @@ export default class GamePresenter {
       gameState.reset();
     }
 
-    if (gameState.currentLevelNumber < gameSequence.length) {
-      const question = gameSequence[gameState.currentLevelNumber++];
+    return data;
+  }
 
-      if (!data || !headerPresenter.view) {
-        headerPresenter.initialize(gameState.timeLeft, gameState.mistakesCount);
-        if (gameState.mistakesCount) {
-          headerPresenter.view.showMistakes();
-        }
-      }
+  static initializeGameScreen(question) {
+    this.timeStart = headerPresenter.view.timer.value;
 
-      this.timeStart = headerPresenter.view.timer.value;
-      if (question.questionType === QuestionType.ARTIST) {
-        artistPresenter.initialize(question);
-      } else {
-        genrePresenter.initialize(question);
-      }
-
+    if (question.questionType === QuestionType.ARTIST) {
+      artistPresenter.initialize(question);
     } else {
-      Application.showResult(getDataResult());
+      genrePresenter.initialize(question);
     }
   }
 

@@ -27,5 +27,5 @@ splash.show();
 Loader.loadData()
     .then(transformData)
     .then((links) => preloadAudio(links))
-    // .then(() => Application.initialize())
+    // .then(() => Application.showWelcome())
     .catch(window.console.error);

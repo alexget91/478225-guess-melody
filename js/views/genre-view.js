@@ -49,6 +49,22 @@ export default class GenreView extends AbstractView {
     return parseInt(this.element.querySelector(`.genre`).dataset.rightLength, 10);
   }
 
+  get players() {
+    if (!this._players) {
+      this._players = [].map.call(this.element.querySelectorAll(`.player`), (el, i) => {
+        const audioObject = gameMusic[this.data.answers[i].src];
+        audioObject.currentTime = 0;
+
+        return {
+          audio: audioObject,
+          control: el.querySelector(`.player-control`)
+        };
+      });
+    }
+
+    return this._players;
+  }
+
   getAnswerID(answerCheckbox) {
     return answerCheckbox.getAttribute(`id`);
   }
@@ -57,19 +73,7 @@ export default class GenreView extends AbstractView {
     this.submitBtn = this.element.querySelector(`.genre-answer-send`);
     this.answers = this.element.querySelectorAll(`.genre-answer input[name="answer"]`);
     this.playingID = null;
-    this.players = {};
     this.userAnswer = {};
-
-
-    [].forEach.call(this.element.querySelectorAll(`.player`), (el, i) => {
-      const audioObject = gameMusic[this.data.answers[i].src];
-      audioObject.currentTime = 0;
-
-      this.players[i] = {
-        audio: audioObject,
-        control: el.querySelector(`.player-control`)
-      };
-    });
 
     this.submitToggle(true);
     [].forEach.call(this.answers, (el) => el.addEventListener(`change`, this.onAnswerChange));

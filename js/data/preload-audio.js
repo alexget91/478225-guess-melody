@@ -42,3 +42,10 @@ const preloadAudio = (links) => {
 };
 
 export default preloadAudio;
+
+/* export default (links) => {
+  links.forEach((el) => {
+    const audio = new Audio(el);
+    gameMusic[el] = audio;
+  });
+}; */
