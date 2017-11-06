@@ -7,38 +7,7 @@ import Loader from './loader';
 import transformData from './data/transform-data';
 import preloadAudio from './data/preload-audio';
 
-const ControllerId = {
-  WELCOME: ``,
-  GAME: `game`,
-  RESULT: `result`
-};
-
 export default class Application {
-  static initialize() {
-    Application.routes = {
-      [ControllerId.WELCOME]: welcomePresenter,
-      [ControllerId.GAME]: GamePresenter,
-      [ControllerId.RESULT]: resultPresenter
-    };
-
-    const hashChangeHandler = () => {
-      const hashValue = location.hash.replace(`#`, ``);
-      const [id, data] = hashValue.split(`?`);
-      this.changeHash(id, data);
-    };
-
-    window.onhashchange = hashChangeHandler;
-    hashChangeHandler();
-  }
-
-  static changeHash(id, data) {
-    const controller = Application.routes[id];
-
-    if (controller) {
-      controller.initialize(data);
-    }
-  }
-
   static showWelcome() {
     welcomePresenter.initialize();
   }

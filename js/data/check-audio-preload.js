@@ -7,6 +7,6 @@ export default (gameMusicLength) => {
 
   console.log(`Загружено ${audioPreloadCount} из ${gameMusicLength}`);
   if (gameMusicLength === audioPreloadCount) {
-    Application.initialize();
+    Application.showWelcome();
   }
 };
