@@ -8,36 +8,24 @@ import Application from '../application';
 
 const preloadAudio = (links) => {
   const linksSize = links.size;
-  const linksValues = links.values();
   let audioPreloadCount = 0;
-  const loadAudioLinks = [];
 
-  const loadAudioLink = () => {
-    const linkNext = linksValues.next();
+  Promise.all(Array.from(links).map((it) => {
+    const loadPromise = new Promise((resolve) => {
+      const audio = new Audio();
+      audio.addEventListener(`canplaythrough`, () => resolve(audio));
+      audio.src = it;
+      audio.load();
+    });
 
-    if (!linkNext.done) {
-      const loadPromise = new Promise((resolve) => {
-        const audio = new Audio();
-        audio.addEventListener(`canplaythrough`, () => resolve(audio));
-        audio.src = linkNext.value;
-        audio.load();
-      });
+    loadPromise.then((audio) => {
+      audioPreloadCount++;
+      splashScreen.showProgress(Math.round(audioPreloadCount / linksSize * 100));
+      gameMusic[it] = audio;
+    });
 
-      loadPromise.then((audio) => {
-        audioPreloadCount++;
-        splashScreen.showProgress(Math.round(audioPreloadCount / linksSize * 100));
-        gameMusic[linkNext.value] = audio;
-      });
-
-      loadAudioLinks.push(loadPromise);
-
-      loadAudioLink();
-    }
-  };
-
-  loadAudioLink();
-
-  Promise.all(loadAudioLinks)
+    return loadPromise;
+  }))
       .then(() => {
         Application.showWelcome();
       })
