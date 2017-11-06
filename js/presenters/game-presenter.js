@@ -11,11 +11,11 @@ export default class GamePresenter {
   static initialize(data) {
     data = ConvertData.decode(data);
 
-    if (!data) {
+    if (data) {
+      [gameState.currentLevelNumber, gameState.notesLeft, gameState.timeLeft] = data;
+    } else {
       gameAnswers.length = 0;
       gameState.reset();
-    } else {
-      [gameState.currentLevelNumber, gameState.notesLeft, gameState.timeLeft] = data;
     }
 
     if (gameState.currentLevelNumber < gameSequence.length) {
@@ -56,17 +56,14 @@ export default class GamePresenter {
       gameState.notesLeft--;
     }
 
-    if (!gameState.notesLeft) {
-
-      Application.showResult([gameData.ExitCode.NOTES_OVER]);
-
-    } else {
-
+    if (gameState.notesLeft) {
       if (!isRight) {
         headerPresenter.view.showMistakes();
       }
-
       Application.showGameScreen([gameState.currentLevelNumber, gameState.notesLeft, gameState.timeLeft]);
+
+    } else {
+      Application.showResult([gameData.ExitCode.NOTES_OVER]);
     }
   }
 }
