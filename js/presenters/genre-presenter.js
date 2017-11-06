@@ -42,7 +42,7 @@ class GenrePresenter {
   }
 
   checkAnswer(userAnswerValues) {
-    return userAnswerValues.length === this.rightAnswerLength && userAnswerValues.every((it) => it);
+    return userAnswerValues.length === this.view.rightAnswerLength && userAnswerValues.every((it) => it);
   }
 }
 
