@@ -39,11 +39,17 @@ class ResultPresenter {
     view.show();
 
     if (Object.keys(gameResult).length) {
-      Loader.saveResults(gameResult)
-          .then(() => Loader.loadResults())
-          .then((gameStatistics) => {
-            view.showComparison(getComparison(gameStatistics, gameResult));
-          });
+      this.saveAndShowComparison();
+    }
+  }
+
+  async saveAndShowComparison() {
+    try {
+      await Loader.saveResults(gameResult);
+      const gameStatistics = await Loader.loadResults();
+      this.view.showComparison(getComparison(gameStatistics, gameResult));
+    } catch (error) {
+      throw new Error(error);
     }
   }
 }

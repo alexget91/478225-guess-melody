@@ -8,7 +8,34 @@ import transformData from './data/transform-data';
 import preloadAudio from './data/preload-audio';
 
 export default class Application {
+  static async prepareDataAndInitialize() {
+    splashScreen.show();
+    this.setWelcomeTimeout();
+    try {
+      const data = await Loader.loadData();
+      const links = transformData(data);
+      preloadAudio(links);
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
+  static setWelcomeTimeout() {
+    const PRELOAD_WAITING_TIME = 10000;
+
+    this.welcomeTimeout = setTimeout(() => {
+      Application.showWelcome();
+    }, PRELOAD_WAITING_TIME);
+  }
+
+  static clearWelcomeTimeout() {
+    if (typeof this.welcomeTimeout !== `undefined`) {
+      clearTimeout(this.welcomeTimeout);
+    }
+  }
+
   static showWelcome() {
+    this.clearWelcomeTimeout();
     welcomePresenter.initialize();
   }
 
@@ -21,9 +48,4 @@ export default class Application {
   }
 }
 
-splashScreen.show();
-
-Loader.loadData()
-    .then(transformData)
-    .then((links) => preloadAudio(links))
-    .catch(window.console.error);
+Application.prepareDataAndInitialize();
