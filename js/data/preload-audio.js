@@ -14,15 +14,18 @@ const preloadAudio = async (links) => {
     await Promise.all(Array.from(links).map((it) => {
       const loadPromise = new Promise((resolve) => {
         const audio = new Audio();
-        audio.addEventListener(`canplaythrough`, () => resolve(audio));
+        audio.addEventListener(`canplaythrough`, () => resolve());
         audio.src = it;
+        gameMusic[it] = audio;
         audio.load();
       });
 
-      loadPromise.then((audio) => {
+      loadPromise.then(() => {
         audioPreloadCount++;
         splashScreen.showProgress(Math.round(audioPreloadCount / linksSize * 100));
-        gameMusic[it] = audio;
+      }).catch((error) => {
+        audioPreloadCount++;
+        throw new Error(error);
       });
 
       return loadPromise;

@@ -10,6 +10,7 @@ import preloadAudio from './data/preload-audio';
 export default class Application {
   static async prepareDataAndInitialize() {
     splashScreen.show();
+    this.setWelcomeTimeout();
     try {
       const data = await Loader.loadData();
       const links = transformData(data);
@@ -19,7 +20,22 @@ export default class Application {
     }
   }
 
+  static setWelcomeTimeout() {
+    const PRELOAD_WAITING_TIME = 10000;
+
+    this.welcomeTimeout = setTimeout(() => {
+      Application.showWelcome();
+    }, PRELOAD_WAITING_TIME);
+  }
+
+  static clearWelcomeTimeout() {
+    if (typeof this.welcomeTimeout !== `undefined`) {
+      clearTimeout(this.welcomeTimeout);
+    }
+  }
+
   static showWelcome() {
+    this.clearWelcomeTimeout();
     welcomePresenter.initialize();
   }
 
