@@ -8,6 +8,17 @@ import transformData from './data/transform-data';
 import preloadAudio from './data/preload-audio';
 
 export default class Application {
+  static async prepareDataAndInitialize() {
+    splashScreen.show();
+    try {
+      const data = await Loader.loadData();
+      const links = transformData(data);
+      preloadAudio(links);
+    } catch (error) {
+      throw new Error(error);
+    }
+  }
+
   static showWelcome() {
     welcomePresenter.initialize();
   }
@@ -21,9 +32,4 @@ export default class Application {
   }
 }
 
-splashScreen.show();
-
-Loader.loadData()
-    .then(transformData)
-    .then((links) => preloadAudio(links))
-    .catch(window.console.error);
+Application.prepareDataAndInitialize();

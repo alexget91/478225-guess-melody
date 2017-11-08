@@ -66,13 +66,14 @@ export default class ArtistView extends AbstractView {
     this.playerControl.removeEventListener(`click`, this.onPlayerClick);
   }
 
-  audioToggle(play) {
+  async audioToggle(play) {
     if ((!play || !this.audio.paused) && typeof this.playPromise !== `undefined`) {
-      this.playPromise
-          .then(() => this.audio.pause())
-          .catch((error) => {
-            throw new Error(error);
-          });
+      try {
+        await this.playPromise;
+        this.audio.pause();
+      } catch (error) {
+        throw new Error(error);
+      }
     } else {
       this.playPromise = this.audio.play();
     }
